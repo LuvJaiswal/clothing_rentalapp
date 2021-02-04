@@ -138,6 +138,13 @@
             android:background="@color/colorAccent"
             android:text="LOGIN"></Button>
 
+        <TextView
+            android:id="@+id/txt_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:textSize="40dp"
+            />
     </LinearLayout>
 
 
