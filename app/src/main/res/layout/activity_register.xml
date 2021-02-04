@@ -58,12 +58,12 @@
             tools:layout_editor_absoluteY="255dp" />
 
         <Button
-            android:id="@+id/LoginBtn"
+            android:id="@+id/RegisterBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:background="@color/colorAccent"
-            android:text="LOGIN"></Button>
+            android:text="Register"></Button>
 
     </LinearLayout>
 
