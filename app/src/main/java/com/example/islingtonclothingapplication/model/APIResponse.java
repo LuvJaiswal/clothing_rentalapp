@@ -14,7 +14,8 @@ public class APIResponse {
         return error;
     }
 
-    public void setError(boolean error) {
+    public void setError(
+            boolean error) {
         this.error = error;
     }
 
