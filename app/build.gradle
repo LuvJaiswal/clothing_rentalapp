@@ -1,3 +1,4 @@
+//noinspection GradleCompatible
 apply plugin: 'com.android.application'
 
 android {
@@ -30,4 +31,20 @@ dependencies {
     //retrofit task
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+
+    //Slider Layout
+    implementation 'com.daimajia.slider:library:1.1.5@aar'
+
+
+    //RxJava
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.10'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.4.0'
+    implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+
+//    implementation 'com.github.smarteist:autoimageslider:1.4.0'
+//    implementation 'com.github.smarteist:autoimageslider:1.4.0-appcompat'
+//    implementation 'com.squareup.picasso:picasso:1.1.0'
+
+
 }
