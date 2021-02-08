@@ -57,6 +57,20 @@
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteY="255dp" />
 
+        <EditText
+            android:id="@+id/register_phone"
+            android:layout_width="match_parent"
+            android:hint="phone"
+            android:textStyle="bold|italic"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/White"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteY="255dp" />
+
         <Button
             android:id="@+id/RegisterBtn"
             android:layout_width="wrap_content"
