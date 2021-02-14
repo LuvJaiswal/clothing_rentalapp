@@ -37,7 +37,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         mService = Common.getAPI();
 
-        sliderLayout= findViewById(R.id.slider) ;
+        sliderLayout = findViewById(R.id.slider) ;
 
         //Get banner
 
