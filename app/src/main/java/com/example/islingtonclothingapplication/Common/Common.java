@@ -6,7 +6,7 @@ import com.example.islingtonclothingapplication.Remote.RetrofitClient;
 import retrofit2.Retrofit;
 
 public class Common {
-    public static final String BASE_URL = "http://192.168.100.111/rentalcloth/";
+    public static final String BASE_URL = "http://192.168.100.112/rentalcloth/";
 
     public static IMyAPI getAPI()
     {
