@@ -1,4 +1,5 @@
 //noinspection GradleCompatible
+//noinspection GradleCompatible
 apply plugin: 'com.android.application'
 
 android {
@@ -36,6 +37,7 @@ dependencies {
     implementation 'com.daimajia.slider:library:1.1.5@aar'
     implementation 'com.squareup.picasso:picasso:1.1.0'
     implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'com.android.support:support-v4:29.1.1'
 
 
     //RxJava
@@ -48,9 +50,11 @@ dependencies {
 
 
 
-//    implementation 'com.github.smarteist:autoimageslider:1.4.0'
-//    implementation 'com.github.smarteist:autoimageslider:1.4.0-appcompat'
+    implementation 'com.github.smarteist:autoimageslider:1.4.0'
+    implementation 'com.github.smarteist:autoimageslider:1.4.0-appcompat'
     implementation 'com.squareup.picasso:picasso:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
 
 
 }

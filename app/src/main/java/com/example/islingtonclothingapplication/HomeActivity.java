@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.daimajia.slider.library.SliderAdapter;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
@@ -36,7 +37,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         mService = Common.getAPI();
 
-        sliderLayout= (SliderLayout)findViewById(R.id.slider) ;
+        sliderLayout= findViewById(R.id.slider) ;
 
         //Get banner
 
@@ -45,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void getBannerImage() {
        compositeDisposable.add(mService.getBanners()
-               .subscribeOn(Schedulers.io())
+       .subscribeOn(Schedulers.io())
                .observeOn(AndroidSchedulers.mainThread())
                .subscribe(new Consumer<List<Banner>>() {
                    @Override

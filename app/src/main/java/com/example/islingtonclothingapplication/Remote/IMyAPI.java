@@ -4,7 +4,7 @@ import com.example.islingtonclothingapplication.model.APIResponse;
 import com.example.islingtonclothingapplication.model.Banner;
 
 import java.util.List;
-
+//import io.reactivex.Observable;
 import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -26,4 +26,10 @@ public interface IMyAPI {
 
     @GET("getbanner.php")
     Observable<List<Banner>> getBanners();
+
+
+
+//    @GET("getcategory.php")
+//    Observable<List<Categor>> getBanners();
+
 }
