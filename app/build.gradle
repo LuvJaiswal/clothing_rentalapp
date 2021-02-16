@@ -33,9 +33,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
 
     //Slider Layout
-    implementation 'com.daimajia.slider:library:1.1.5@aar'
-    implementation 'com.squareup.picasso:picasso:1.1.0'
+    implementation "com.android.support:support-v4:+"
+    implementation 'com.squareup.picasso:picasso:2.3.2'
     implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'com.daimajia.slider:library:1.1.5@aar'
+
 
 
     //RxJava
@@ -50,7 +52,6 @@ dependencies {
 
 //    implementation 'com.github.smarteist:autoimageslider:1.4.0'
 //    implementation 'com.github.smarteist:autoimageslider:1.4.0-appcompat'
-    implementation 'com.squareup.picasso:picasso:1.1.0'
 
 
 }

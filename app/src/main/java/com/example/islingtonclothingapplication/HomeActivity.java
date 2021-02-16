@@ -78,7 +78,7 @@ public class HomeActivity extends AppCompatActivity {
                             .image(bannerMap.get(name))
                             .setScaleType(BaseSliderView.ScaleType.Fit);
 
-            sliderLayout.addSlider(textSliderView);
+             sliderLayout.addSlider(textSliderView);
 
         }
     }
