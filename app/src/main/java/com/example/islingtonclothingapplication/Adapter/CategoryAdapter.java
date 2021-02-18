@@ -1,6 +1,7 @@
 package com.example.islingtonclothingapplication.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.islingtonclothingapplication.ClothesActivity;
+import com.example.islingtonclothingapplication.Common.Common;
+import com.example.islingtonclothingapplication.Interface.IItemClickListener;
 import com.example.islingtonclothingapplication.R;
 import com.example.islingtonclothingapplication.model.Category;
 import com.squareup.picasso.Picasso;
@@ -18,6 +22,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
 
     Context context;
     List<Category> categories;
+
+    IItemClickListener IItemClickListener;
 
     public CategoryAdapter(Context context, List<Category> categories) {
         this.context = context;
@@ -32,14 +38,28 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CategoryViewHolder holder, final int position) {
+
+        //Load Image
 
         Picasso.with(context)
                 .load(categories.get(position).Link)
                 .into(holder.img_product);
 
         holder.txt_category_name.setText(categories.get(position).Name);
+
+        //EVENT
+
+        holder.setItemClickListener(new IItemClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Common.currentCategory = categories.get(position);
+                context.startActivity(new Intent(context, ClothesActivity.class));
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {

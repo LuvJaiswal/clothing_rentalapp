@@ -3,6 +3,7 @@ package com.example.islingtonclothingapplication.Remote;
 import com.example.islingtonclothingapplication.model.APIResponse;
 import com.example.islingtonclothingapplication.model.Banner;
 import com.example.islingtonclothingapplication.model.Category;
+import com.example.islingtonclothingapplication.model.Clothes;
 
 import java.util.List;
 
@@ -30,4 +31,9 @@ public interface IMyAPI {
 
     @GET("getcategory.php")
     Observable<List<Category>> getCategory();
+
+    @FormUrlEncoded
+    @POST("getclothes.php")
+    Call<Clothes>getClothes(@Field("categoryid") String categoryID);
+
 }
