@@ -19,6 +19,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     Context context;
     List<Category> categories;
 
+    public CategoryAdapter(Context context, List<Category> categories) {
+        this.context = context;
+        this.categories = categories;
+    }
+
     @NonNull
     @Override
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
