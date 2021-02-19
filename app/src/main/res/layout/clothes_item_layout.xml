@@ -43,6 +43,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/txt_price"
                 android:layout_weight="2"
                 android:padding="2dp"
                 android:layout_width="wrap_content"
