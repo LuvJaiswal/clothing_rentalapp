@@ -17,8 +17,7 @@ public class ClothesViewHolder extends RecyclerView.ViewHolder implements View.O
 
     IItemClickListener itemClickListener;
 
-    public ClothesViewHolder(@NonNull View itemView, IItemClickListener itemClickListener) {
-        super(itemView);
+    public void setItemClickListener(IItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
