@@ -34,6 +34,6 @@ public interface IMyAPI {
 
     @FormUrlEncoded
     @POST("getclothes.php")
-    Call<Clothes>getClothes(@Field("categoryid") String categoryID);
+    Observable<List<Clothes>>getClothes(@Field("categoryid") String categoryID);
 
 }

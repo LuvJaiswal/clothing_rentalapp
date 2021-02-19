@@ -24,10 +24,12 @@ public class ClothesViewHolder extends RecyclerView.ViewHolder implements View.O
     public ClothesViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        img_product = (ImageView) itemView.findViewById(R.id.image_product);
+        img_product = (ImageView) itemView.findViewById(R.id.clothes_image_product);
         txt_clothe_name = (TextView) itemView.findViewById(R.id.txt_cloth_name);
         txt_price = (TextView) itemView.findViewById(R.id.txt_price);
 
+
+        itemView.setOnClickListener(this);
 
     }
 

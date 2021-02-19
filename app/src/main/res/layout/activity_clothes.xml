@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"/>
 
         <TextView
+            android:id="@+id/banner_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -36,6 +37,7 @@
     </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rec_clothes_list"
         android:layout_weight="6"
         android:layout_margin="8dp"
         android:layout_width="match_parent"

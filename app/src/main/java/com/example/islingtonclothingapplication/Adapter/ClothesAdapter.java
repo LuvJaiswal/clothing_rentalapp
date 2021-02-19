@@ -21,6 +21,12 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
     Context context;
     List<Clothes>clothesList;
 
+    IItemClickListener IItemClickListener;
+
+    public ClothesAdapter(Context context, List<Clothes> clothesList) {
+        this.context = context;
+        this.clothesList = clothesList;
+    }
 
     @NonNull
     @Override
@@ -38,6 +44,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
         Picasso.with(context)
                 .load(clothesList.get(position).Link)
                 .into(holder.img_product);
+
         holder.setItemClickListener(new IItemClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +55,6 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return clothesList.size();
     }
 }
