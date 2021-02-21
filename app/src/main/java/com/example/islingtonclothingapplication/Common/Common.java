@@ -7,7 +7,7 @@ import com.example.islingtonclothingapplication.model.Category;
 import retrofit2.Retrofit;
 
 public class Common {
-    public static final String BASE_URL = "http://192.168.100.115/rentalcloth/";
+    public static final String BASE_URL = "http://192.168.100.124/rentalcloth/";
 
     public static Category currentCategory=null;
     public static IMyAPI getAPI()

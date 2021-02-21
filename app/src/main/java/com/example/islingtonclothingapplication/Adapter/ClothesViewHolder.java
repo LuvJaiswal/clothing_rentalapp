@@ -1,6 +1,7 @@
 package com.example.islingtonclothingapplication.Adapter;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +18,8 @@ public class ClothesViewHolder extends RecyclerView.ViewHolder implements View.O
 
     IItemClickListener itemClickListener;
 
+    Button btn_add_to_cart;
+
     public void setItemClickListener(IItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
@@ -28,6 +31,8 @@ public class ClothesViewHolder extends RecyclerView.ViewHolder implements View.O
         txt_clothe_name = (TextView) itemView.findViewById(R.id.txt_cloth_name);
         txt_price = (TextView) itemView.findViewById(R.id.txt_price);
 
+        btn_add_to_cart = (Button)itemView.findViewById(R.id.btn_add_cart);
+        
 
         itemView.setOnClickListener(this);
 
