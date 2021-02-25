@@ -26,6 +26,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.example.islingtonclothingapplication.model.Category;
+import com.example.islingtonclothingapplication.model.Clothes;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -59,6 +60,21 @@ public class HomeActivity extends AppCompatActivity {
 
         //Get menu
         getMenu();
+
+        //save newestToppingList
+        getToppingList();
+    }
+
+    private void getToppingList() {
+        compositeDisposable.add(mService.getClothes(Common.TOPPING_CLOTHES_ID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<Clothes>>() {
+                    @Override
+                    public void accept(List<Clothes> clothes) throws Exception {
+                        Common.toppingList = clothes;
+                    }
+                }));
     }
 
     private void getMenu() {
