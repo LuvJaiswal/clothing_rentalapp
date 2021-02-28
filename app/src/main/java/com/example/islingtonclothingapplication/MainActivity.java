@@ -1,27 +1,28 @@
 package com.example.islingtonclothingapplication;
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.islingtonclothingapplication.Common.Common;
 import com.example.islingtonclothingapplication.Remote.IMyAPI;
 import com.example.islingtonclothingapplication.model.APIResponse;
+import com.google.android.material.textfield.TextInputEditText;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-
+    private DrawerLayout drawer;
     TextView txt_register;
-    EditText et_email, et_password;
+    TextInputEditText et_email, et_password;
     Button btn_login;
 
     IMyAPI mService;  //to access the api
@@ -32,16 +33,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Init service
+  //      drawer = findViewById(R.id.drawer_layout);
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+//                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawer.addDrawerListener(toggle);
+//        toggle.syncState();
+//
+//        //Init service
         mService = Common.getAPI();
 
 
         //Init views
-        txt_register = (TextView)findViewById(R.id.txt_register);
-        et_email = (EditText)findViewById(R.id.login_email);
-        et_password=(EditText)findViewById(R.id.login_password);
-
-        btn_login = (Button) findViewById(R.id.LoginBtn);
+        txt_register = findViewById(R.id.txt_register);
+        et_email = findViewById(R.id.et_email);
+        et_password=findViewById(R.id.et_password);
+        btn_login =findViewById(R.id.LoginBtn);
 
 
         //Event
@@ -83,11 +89,12 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<APIResponse> call, Throwable t) {
-
                         Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
 
     }
+
+
 }

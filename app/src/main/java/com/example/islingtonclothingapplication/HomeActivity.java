@@ -1,8 +1,13 @@
 package com.example.islingtonclothingapplication;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
+
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -24,7 +29,9 @@ import com.daimajia.slider.library.SliderLayout;
 public class HomeActivity extends AppCompatActivity {
 
     SliderLayout sliderLayout;
+    private DrawerLayout drawer;
     IMyAPI mService;
+    Toolbar toolbar;
 
     //Rxjjava
     CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -35,6 +42,13 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         mService = Common.getAPI();
+        toolbar=findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
         sliderLayout= (SliderLayout)findViewById(R.id.slider) ;
 
@@ -80,6 +94,15 @@ public class HomeActivity extends AppCompatActivity {
 
              sliderLayout.addSlider(textSliderView);
 
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
     }
 }
