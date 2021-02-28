@@ -52,9 +52,23 @@ dependencies {
 
     implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
 
-//    implementation 'com.github.smarteist:autoimageslider:1.4.0'
-//    implementation 'com.github.smarteist:autoimageslider:1.4.0-appcompat'
 
+
+
+    def lifecycle_version = "1.1.1"
+    def room_version = "2.2.6"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    // optional - RxJava support for Room
+    implementation "androidx.room:room-rxjava2:$room_version"
+
+    // optional - Guava support for Room, including Optional and ListenableFuture
+    implementation "androidx.room:room-guava:$room_version"
+
+    // optional - Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
 
     //life cycle components
     implementation "android.arch.lifecycle:extensions:1.1.0"
@@ -69,4 +83,8 @@ dependencies {
     //for room
     implementation 'android.arch.persistence.room:runtime:1.0.0-alpha1'
     annotationProcessor 'android.arch.persistence.room:compiler:1.0.0-alpha1'
+
+
+
+
 }

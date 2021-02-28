@@ -3,6 +3,7 @@ package com.example.islingtonclothingapplication.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.islingtonclothingapplication.Common.Common;
+import com.example.islingtonclothingapplication.Database.ModelDB.Cart;
 import com.example.islingtonclothingapplication.Interface.IItemClickListener;
 import com.example.islingtonclothingapplication.R;
 import com.example.islingtonclothingapplication.model.Clothes;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -82,24 +85,24 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
 
         RadioButton rdi_day = (RadioButton) itemView.findViewById(R.id.rdi_timeDay);
 
-        RadioButton rdi_4day = (RadioButton)itemView.findViewById(R.id.rdi_4Day);
+        RadioButton rdi_4day = (RadioButton) itemView.findViewById(R.id.rdi_4Day);
 
-        RadioButton rdi_week = (RadioButton)itemView.findViewById(R.id.rdi_timeWeek);
+        RadioButton rdi_week = (RadioButton) itemView.findViewById(R.id.rdi_timeWeek);
 
 
         rdi_day.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    Common.daysfor_rent=0;
+                if (isChecked) {
+                    Common.daysfor_rent = 0;
                 }
             }
         });
         rdi_4day.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    Common.daysfor_rent=0;
+                if (isChecked) {
+                    Common.daysfor_rent = 0;
                 }
             }
         });
@@ -107,8 +110,8 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
         rdi_week.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    Common.daysfor_rent=1;
+                if (isChecked) {
+                    Common.daysfor_rent = 1;
                 }
             }
         });
@@ -116,7 +119,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
 
         //Recycle work for topping
 
-        RecyclerView recycler_top = (RecyclerView)itemView.findViewById(R.id.recycler_top);
+        RecyclerView recycler_top = (RecyclerView) itemView.findViewById(R.id.recycler_top);
         recycler_top.setLayoutManager(new LinearLayoutManager(context));
         recycler_top.setHasFixedSize(true);
 
@@ -135,11 +138,11 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
         builder.setNegativeButton("Add To Cart", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-               if (Common.daysfor_rent == -1){
-                   Toast.makeText(context, "Please choose the number of days to be rented", Toast.LENGTH_SHORT).show();
-                return;
-               }
-                showConfirmDialog(position,txt_count.getNumber());
+                if (Common.daysfor_rent == -1) {
+                    Toast.makeText(context, "Please choose the number of days to be rented", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                showConfirmDialog(position, txt_count.getNumber());
                 dialog.dismiss();
             }
         });
@@ -148,16 +151,16 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
 
     }
 
-    private void showConfirmDialog(int position, String number) {
+    private void showConfirmDialog(int position, final String number) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View itemView = LayoutInflater.from(context)
-                .inflate(R.layout.confirm_add_to_cart_layout,null);
+                .inflate(R.layout.confirm_add_to_cart_layout, null);
 
         //View
 
         ImageView img_product_dialog = (ImageView) itemView.findViewById(R.id.img_product);
-        TextView txt_product_dialog = (TextView) itemView.findViewById(R.id.txt_confirm_cart_product_name);
+        final TextView txt_product_dialog = (TextView) itemView.findViewById(R.id.txt_confirm_cart_product_name);
 
         TextView txt_product_price = (TextView) itemView.findViewById(R.id.txt_confirm_cart_product_price);
 
@@ -165,37 +168,54 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
 
         Picasso.with(context).load(clothesList.get(position).Link).into(img_product_dialog);
         txt_product_dialog.setText(new StringBuilder(clothesList.get(position).Name).append("   x   ")
-        .append(number).append(" for ")
-        .append(Common.daysfor_rent == 0 ? "Day 2" :  "1 Week").toString());
+                .append(number).append(" for ")
+                .append(Common.daysfor_rent == 0 ? "Day 2" : "1 Week").toString());
 
-        double price = (Double.parseDouble(clothesList.get(position).Price)*Double.parseDouble(number)) +Common.topPrice;
+        double price = (Double.parseDouble(clothesList.get(position).Price) * Double.parseDouble(number)) + Common.topPrice;
 
-        if (Common.daysfor_rent == 1){
-            price+=100;
+        if (Common.daysfor_rent == 1) {
+            price += 100;
         }
-        if (Common.daysfor_rent == 2){
-            price+=200;
+        if (Common.daysfor_rent == 2) {
+            price += 200;
         }
-        if (Common.daysfor_rent == 1){
-            price+=300;
+        if (Common.daysfor_rent == 1) {
+            price += 300;
         }
 
         StringBuilder topp_final_comment = new StringBuilder("");
-        for (String line:Common.toppingAdded)
+        for (String line : Common.toppingAdded)
             topp_final_comment.append(line).append("\n");
 
         //left smthing to explain
 
 
+        final double finalPrice = price;
         builder.setNegativeButton("CONFIRM", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                //Add to SQLITE
-                //Implement late in next part
+
                 dialog.dismiss();
 
+                //Add to SQLITE
+                //Implement late in next part
+
+                Cart cartItem = new Cart();
+                cartItem.name = txt_product_dialog.getText().toString();
+                cartItem.amount = Integer.parseInt(number);
+                cartItem.price = finalPrice;
+
+                //Added to DB
+
+                Common.cartRepository.insertToCart(cartItem);
+                Log.d("Clothing_Debug", new Gson().toJson(cartItem));
+                Toast.makeText(context, "Save item to cart success", Toast.LENGTH_SHORT).show();
             }
+//            catch(Exception ex)
+//            {
+//                Toast.makeText(context, ex.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
         });
 
         builder.setView(itemView);

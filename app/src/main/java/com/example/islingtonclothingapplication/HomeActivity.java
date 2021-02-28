@@ -12,6 +12,9 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.islingtonclothingapplication.Adapter.CategoryAdapter;
 import com.example.islingtonclothingapplication.Common.Common;
+import com.example.islingtonclothingapplication.Database.DataSource.CartDataSource;
+import com.example.islingtonclothingapplication.Database.DataSource.CartRepository;
+import com.example.islingtonclothingapplication.Database.Local.CartDatabase;
 import com.example.islingtonclothingapplication.Remote.IMyAPI;
 import com.example.islingtonclothingapplication.model.Banner;
 
@@ -63,6 +66,15 @@ public class HomeActivity extends AppCompatActivity {
 
         //save newestToppingList
         getToppingList();
+
+        //InitDatabase
+        initDB();
+    }
+
+    private void initDB() {
+        Common.cartDatabase = CartDatabase.getInstance(this);
+        Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.cartDatabase.cartDAO()));
+
     }
 
     private void getToppingList() {
