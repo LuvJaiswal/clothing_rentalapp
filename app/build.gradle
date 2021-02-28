@@ -56,4 +56,8 @@ dependencies {
 //    implementation 'com.github.smarteist:autoimageslider:1.4.0-appcompat'
 
 
+    //life cycle components
+    implementation "android.arch.lifecycle:extensions:1.1.0"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.0"
+    testImplementation "android.arch.core:core-testing:1.1.0"
 }

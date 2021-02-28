@@ -139,7 +139,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
                    Toast.makeText(context, "Please choose the number of days to be rented", Toast.LENGTH_SHORT).show();
                 return;
                }
-                showConfirmDialog(position,txt_count.getNumber(),Common.daysfor_rent);
+                showConfirmDialog(position,txt_count.getNumber());
                 dialog.dismiss();
             }
         });
@@ -148,7 +148,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
 
     }
 
-    private void showConfirmDialog(int position, String number, int daysfor_rent) {
+    private void showConfirmDialog(int position, String number) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View itemView = LayoutInflater.from(context)
