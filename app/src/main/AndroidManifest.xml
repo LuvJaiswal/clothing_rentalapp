@@ -2,9 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.islingtonclothingapplication">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- if you want to load images from a file OR from the internet -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- if you want to load images from a file OR from the internet -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -15,15 +13,31 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+<<<<<<< HEAD
         <activity android:name=".HomeActivity" android:theme="@style/AppTheme.NoActionBar">
+||||||| merged common ancestors
+        <activity android:name=".HomeActivity">
+=======
+        <activity android:name=".ClothesActivity"></activity>
+        <activity android:name=".HomeActivity">
+
+>>>>>>> Room_Database
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
+<<<<<<< HEAD
         <activity android:name=".MainActivity" android:theme="@style/Theme.MaterialComponents.DayNight">
         </activity>
+||||||| merged common ancestors
+        <activity android:name=".MainActivity">
+
+        </activity>
+=======
+        <activity android:name=".MainActivity"></activity>
+>>>>>>> Room_Database
     </application>
 
 </manifest>

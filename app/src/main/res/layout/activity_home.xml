@@ -41,5 +41,43 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         />
+<<<<<<< HEAD
 </LinearLayout>
 </androidx.drawerlayout.widget.DrawerLayout>
+||||||| merged common ancestors
+
+
+
+</LinearLayout>
+=======
+
+
+    <TextView
+        android:id="@+id/random"
+        android:text="Categories Please Select"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/categoryList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+
+
+
+</LinearLayout>
+>>>>>>> Room_Database
