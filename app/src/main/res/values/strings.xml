@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">IslingtonClothingApplication</string>
     <string name="categories_please_select">Categories Please Select</string>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
 </resources>
