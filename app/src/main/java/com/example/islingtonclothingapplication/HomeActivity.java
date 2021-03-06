@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +31,8 @@ import com.example.islingtonclothingapplication.model.Banner;
 import java.util.HashMap;
 import java.util.List;
 
+import Fragments.cartfragment;
+import Fragments.homefragment;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -59,6 +62,7 @@ public class HomeActivity extends AppCompatActivity {
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
     androidx.appcompat.widget.Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,30 +73,35 @@ public class HomeActivity extends AppCompatActivity {
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        nav =(NavigationView)findViewById(R.id.navmenu);
-        drawerLayout=(DrawerLayout)findViewById(R.id.drawer);
+        nav = (NavigationView)findViewById(R.id.navmenu);
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer);
 
-        toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new homefragment()).commit();
+        nav.setCheckedItem(R.id.menu_home);
+
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            Fragment temp;
+
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                switch (menuItem.getItemId()){
+
+                switch (menuItem.getItemId()) {
                     case R.id.menu_home:
-                        Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
-                        startActivity(intent);
-                        Log.d(TAG,"homeclicked");
+                        temp = new homefragment();
+                        Log.d(TAG, "Clicked menu");
                         break;
 
 
-                    case R.id.cart_icon :
-                        Toast.makeText(getApplicationContext(), "Cart clicked", Toast.LENGTH_SHORT).show();
+                    case R.id.cart_icon:
+                        temp = new cartfragment();
                         break;
                 }
-
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, temp).commit();
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
