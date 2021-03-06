@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -40,8 +42,9 @@ import com.daimajia.slider.library.SliderLayout;
 import com.example.islingtonclothingapplication.model.Category;
 import com.example.islingtonclothingapplication.model.Clothes;
 import com.google.android.material.navigation.NavigationView;
+import com.nex3z.notificationbadge.NotificationBadge;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     SliderLayout sliderLayout;
     IMyAPI mService;
@@ -59,6 +62,11 @@ public class HomeActivity extends AppCompatActivity {
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
     androidx.appcompat.widget.Toolbar toolbar;
+
+    //Notification badge
+
+    NotificationBadge badge;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,10 +77,10 @@ public class HomeActivity extends AppCompatActivity {
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        nav =(NavigationView)findViewById(R.id.navmenu);
-        drawerLayout=(DrawerLayout)findViewById(R.id.drawer);
+        nav = (NavigationView) findViewById(R.id.navmenu);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
-        toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -80,15 +88,15 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                switch (menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.menu_home:
-                        Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                         startActivity(intent);
-                        Log.d(TAG,"homeclicked");
+                        Log.d(TAG, "homeclicked");
                         break;
 
 
-                    case R.id.cart_icon :
+                    case R.id.cart_icon:
                         Toast.makeText(getApplicationContext(), "Cart clicked", Toast.LENGTH_SHORT).show();
                         break;
                 }
@@ -101,10 +109,11 @@ public class HomeActivity extends AppCompatActivity {
 
         mService = Common.getAPI();
 
-        lst_category = (RecyclerView) findViewById(R.id.categoryList);
+        lst_category = (RecyclerView)findViewById(R.id.categoryList);
 
         lst_category.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         lst_category.setHasFixedSize(true);
+
 
         sliderLayout = (SliderLayout) findViewById(R.id.slider);
 
@@ -198,5 +207,59 @@ public class HomeActivity extends AppCompatActivity {
             sliderLayout.addSlider(textSliderView);
 
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_action_bar, menu);
+        View view = menu.findItem(R.id.cart_menu).getActionView();
+        badge = (NotificationBadge)view.findViewById(R.id.badges);
+        updateCartCount();
+        return true;
+    }
+
+
+
+    private void updateCartCount() {
+        if (badge == null)
+            return;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (Common.cartRepository.countCartItems() == 0)
+                    badge.setVisibility(View.INVISIBLE);
+                else {
+                    badge.setVisibility(View.VISIBLE);
+                    badge.setText(String.valueOf(Common.cartRepository.countCartItems()));
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.cart_menu) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        return false;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateCartCount();
     }
 }
