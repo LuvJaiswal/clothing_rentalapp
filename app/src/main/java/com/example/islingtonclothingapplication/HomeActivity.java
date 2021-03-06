@@ -8,12 +8,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -66,6 +68,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     //Notification badge
 
     NotificationBadge badge;
+
+    ImageView cart_icon;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,6 +219,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         getMenuInflater().inflate(R.menu.menu_action_bar, menu);
         View view = menu.findItem(R.id.cart_menu).getActionView();
         badge = (NotificationBadge)view.findViewById(R.id.badges);
+
+        cart_icon = (ImageView)view.findViewById(R.id.cart_icon);
+        cart_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HomeActivity.this, "Cart activity clicked", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(HomeActivity.this,CartActivity.class));
+            }
+        });
+
         updateCartCount();
         return true;
     }

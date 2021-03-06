@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CustomNavigation"></activity>
+        <activity android:name=".CartActivity"></activity>
+        <activity android:name=".CustomNavigation" />
         <activity android:name=".ClothesActivity" />
         <activity android:name=".HomeActivity">
             <intent-filter>
