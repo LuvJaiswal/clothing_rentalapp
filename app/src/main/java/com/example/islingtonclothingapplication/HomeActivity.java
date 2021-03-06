@@ -55,7 +55,7 @@ public class HomeActivity extends AppCompatActivity {
 
     //for toggle navigation
 
-    NavigationView navigationView;
+    NavigationView nav;
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
     androidx.appcompat.widget.Toolbar toolbar;
@@ -69,14 +69,14 @@ public class HomeActivity extends AppCompatActivity {
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        navigationView =(NavigationView)findViewById(R.id.navmenu);
+        nav =(NavigationView)findViewById(R.id.navmenu);
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer);
 
         toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
@@ -85,16 +85,15 @@ public class HomeActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
                         startActivity(intent);
                         Log.d(TAG,"homeclicked");
-                        drawerLayout.closeDrawer(GravityCompat.START);
                         break;
 
 
                     case R.id.cart_icon :
                         Toast.makeText(getApplicationContext(), "Cart clicked", Toast.LENGTH_SHORT).show();
-                        drawerLayout.closeDrawer(GravityCompat.START);
                         break;
                 }
 
+                drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
         });

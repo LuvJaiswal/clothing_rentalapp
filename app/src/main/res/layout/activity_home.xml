@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
-            app:title="Navigation drawer" />
+            app:title="Clothes Rental App" />
 
     </RelativeLayout>
 
