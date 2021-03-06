@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -151,7 +152,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
 
     }
 
-    private void showConfirmDialog(int position, final String number) {
+    private void showConfirmDialog(final int position, final String number) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View itemView = LayoutInflater.from(context)
@@ -197,25 +198,29 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
 
 
                 dialog.dismiss();
+                try {
+                    //Add to SQLITE
+                    //Implement late in next part
 
-                //Add to SQLITE
-                //Implement late in next part
+                    Cart cartItem = new Cart();
+                    cartItem.name = txt_product_dialog.getText().toString();
+                    cartItem.amount = Integer.parseInt(number);
+                    cartItem.price = finalPrice;
+                    cartItem.link = clothesList.get(position).Link;
 
-                Cart cartItem = new Cart();
-                cartItem.name = txt_product_dialog.getText().toString();
-                cartItem.amount = Integer.parseInt(number);
-                cartItem.price = finalPrice;
+                    //Added to DB
 
-                //Added to DB
+                    Common.cartRepository.insertToCart(cartItem);
+                    Log.d("Clothing_Debug", new Gson().toJson(cartItem));
+                    Toast.makeText(context, "Save item to cart success", Toast.LENGTH_SHORT).show();
 
-                Common.cartRepository.insertToCart(cartItem);
-                Log.d("Clothing_Debug", new Gson().toJson(cartItem));
-                Toast.makeText(context, "Save item to cart success", Toast.LENGTH_SHORT).show();
+                } catch (Exception ex) {
+                    Toast.makeText(context, ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
             }
-//            catch(Exception ex)
-//            {
-//                Toast.makeText(context, ex.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
+
+
         });
 
         builder.setView(itemView);

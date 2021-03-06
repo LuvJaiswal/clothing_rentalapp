@@ -15,6 +15,9 @@ public class Cart {
     @ColumnInfo(name = "id")
     public int id;
 
+    @ColumnInfo(name = "link")
+    public String link;
+
     @ColumnInfo(name = "name")
     public String name;
 
