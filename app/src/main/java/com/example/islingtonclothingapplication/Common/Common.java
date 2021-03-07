@@ -14,7 +14,7 @@ import java.util.List;
 import retrofit2.Retrofit;
 
 public class Common {
-    public static final String BASE_URL = "http://192.168.100.38/rentalcloth/";
+    public static final String BASE_URL = "http://192.168.100.63/rentalcloth/";
 
     public static Category currentCategory=null;
 
