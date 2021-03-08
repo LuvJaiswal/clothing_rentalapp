@@ -18,5 +18,5 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:support-v4:19.1.0'
+    implementation 'com.android.support:support-v4:29.1.0'
 }

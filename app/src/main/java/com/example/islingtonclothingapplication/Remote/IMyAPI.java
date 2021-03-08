@@ -8,11 +8,14 @@ import com.example.islingtonclothingapplication.model.Clothes;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface IMyAPI {
 
@@ -35,5 +38,9 @@ public interface IMyAPI {
     @FormUrlEncoded
     @POST("getclothes.php")
     Observable<List<Clothes>>getClothes(@Field("categoryid") String categoryID);
+
+    @Multipart
+    @POST("upload.php")
+    Call<String>uploadFile(@Part("email") String email, @Part MultipartBody.Part file);
 
 }
