@@ -8,7 +8,8 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="180dp"
         android:layout_height="180dp"
-        android:src="@drawable/template"
+        android:src="@mipmap/ic_launcher"
+        android:id="@+id/img_avatar"
         />
 
     <TextView
@@ -16,6 +17,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimaryDark"
         android:text="Ayusha Rental Clothes"
+        android:id="@+id/txt_avatar_name"
         android:textSize="30dp"
         />
 
@@ -25,6 +27,7 @@
         android:textColor="@color/colorPrimaryDark"
         android:text="This is my final product"
         android:textStyle="italic|bold"
+        android:id="@+id/txt_avatar_email"
         android:textSize="20dp"
         />
 
