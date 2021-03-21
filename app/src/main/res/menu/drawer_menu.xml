@@ -4,30 +4,17 @@
     tools:showIn="navigation_view">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_message"
-
-            android:title="Message" />
+            android:id="@+id/mainpage"
+            android:icon="@drawable/ic_emoji"
+            android:title="Loginpage" />
         <item
-            android:id="@+id/nav_chat"
-
+            android:id="@+id/test_page"
             android:title="Chat" />
         <item
             android:id="@+id/nav_profile"
 
             android:title="Profile" />
     </group>
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_baseline_emoji_emotions_24"
-                android:title="Send" />
-        </menu>
-    </item>
 </menu>
 
 

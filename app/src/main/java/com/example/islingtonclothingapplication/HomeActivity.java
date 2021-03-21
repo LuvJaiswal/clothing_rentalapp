@@ -1,12 +1,17 @@
 package com.example.islingtonclothingapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 
 import com.daimajia.slider.library.SliderLayout;
@@ -25,13 +30,18 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import com.daimajia.slider.library.SliderLayout;
+import com.google.android.material.internal.NavigationMenu;
+import com.google.android.material.internal.NavigationMenuItemView;
+import com.google.android.material.navigation.NavigationView;
 
-public class HomeActivity extends AppCompatActivity {
+
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     SliderLayout sliderLayout;
-    private DrawerLayout drawer;
+    DrawerLayout drawer;
     IMyAPI mService;
     Toolbar toolbar;
+   NavigationView navigationView;
 
     //Rxjjava
     CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -45,17 +55,20 @@ public class HomeActivity extends AppCompatActivity {
         toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
+
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
+        drawer.bringToFront();
         toggle.syncState();
+        navigationView = findViewById(R.id.nav_view);
 
+        navigationView.setNavigationItemSelectedListener(HomeActivity.this);
         sliderLayout= (SliderLayout)findViewById(R.id.slider) ;
-
-        //Get banner
-
         getBannerImage();
     }
+
 
     private void getBannerImage() {
        compositeDisposable.add(mService.getBanners()
@@ -70,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
                }));
     }
 
-    //ctrl+o
+
 
 
     @Override
@@ -104,5 +117,23 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Toast.makeText(getApplicationContext(),"jahf",Toast.LENGTH_LONG).show();
+        switch (item.getItemId()) {
+            case R.id.mainpage:
+                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.test_page:
+                Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
+                break;
+
+        }
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
