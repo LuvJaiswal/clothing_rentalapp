@@ -2,10 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
+    <group android:checkableBehavior="single">
     <item
         android:id="@+id/cart_menu"
-        android:icon="@drawable/ic_baseline_shopping_cart_24"
-        android:title="Cart"
-        app:showAsAction="always"
-        app:actionLayout="@layout/action_bar_notification"/>
+        app:actionLayout="@layout/action_bar_notification"
+        android:title="Cart" />
+    </group>
+
 </menu>

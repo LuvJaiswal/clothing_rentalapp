@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -26,7 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
+
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -77,13 +78,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     //Rxjjava
     CompositeDisposable compositeDisposable = new CompositeDisposable();
-
     //for toggle navigation
-
     NavigationView nav;
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
-    androidx.appcompat.widget.Toolbar toolbar;
+    Toolbar toolbar;
 
     //Notification badge
 
@@ -96,42 +95,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-
         //for navigation
 
-        androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
+         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        nav = (NavigationView) findViewById(R.id.navmenu);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        nav =  findViewById(R.id.navmenu);
+        drawerLayout = findViewById(R.id.drawer);
 
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
-        nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                switch (menuItem.getItemId()) {
-                    case R.id.menu_home:
-                        Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                        startActivity(intent);
-                        Log.d(TAG, "homeclicked");
-                        break;
-
-
-                    case R.id.cart_icon:
-                        Toast.makeText(getApplicationContext(), "Cart clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
-
 
         mService = Common.getAPI();
 
@@ -161,53 +135,44 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         //event of avatar
 
-        img_avatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                chooseImagee();
-            }
-        });
+//        img_avatar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                chooseImagee();
+//            }
+//        });
 
         //set Info
-
-        txt_name.setText(Common.currentuser.getName());
-        txt_email.setText(Common.currentuser.getEmail());
-
-
-        //set avatar
-
-        if(!TextUtils.isEmpty(Common.currentuser.getAvatarUrl())){
-            Picasso.with(this)
-                    .load(new StringBuilder(Common.BASE_URL)
-                    .append("user_avatar/")
-                    .append(Common.currentuser.getAvatarUrl()).toString())
-                    .into(img_avatar);
-        }
-
-
-
-
-
-
-
-
-
+//
+//        txt_name.setText(Common.currentuser.getName());
+//        txt_email.setText(Common.currentuser.getEmail());
+//
+//
+//        //set avatar
+//
+//        if(!TextUtils.isEmpty(Common.currentuser.getAvatarUrl())){
+//            Picasso.with(this)
+//                    .load(new StringBuilder(Common.BASE_URL)
+//                    .append("user_avatar/")
+//                    .append(Common.currentuser.getAvatarUrl()).toString())
+//                    .into(img_avatar);
+//        }
 
 
 
         //Get banner
 
-        getBannerImage();
+       // getBannerImage();
 
 
         //Get menu
-        getMenu();
+       // getMenu();
 
         //save newestToppingList
-        getToppingList();
+       // getToppingList();
 
         //InitDatabase
-        initDB();
+       // initDB();
     }
 
 
@@ -215,11 +180,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
      * AVATAR WORKING UPLOAD FILE
      */
 
-
-    private void chooseImagee() {
-        startActivityForResult(Intent.createChooser(FileUtils.createGetContentIntent(),"Select a file"),
-                PICK_FILE_REQUEST);
-    }
+//
+//    private void chooseImagee() {
+//        startActivityForResult(Intent.createChooser(FileUtils.createGetContentIntent(),"Select a file"),
+//                PICK_FILE_REQUEST);
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -243,10 +208,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void uploadFile() {
         if (selectedFileUri != null){
-            File file = FileUtils.getFile(this,selectedFileUri);
-
-            String fileName = new StringBuilder(Common.currentuser.getEmail())
-                    .append(FileUtils.getEx)
+//            File file = FileUtils.getFile(this,selectedFileUri);
+//
+//            String fileName = new StringBuilder(Common.currentuser.getEmail())
+//                    .append(FileUtils.getEx)
 
         }
 
@@ -379,10 +344,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
-    }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
@@ -393,5 +354,24 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume() {
         super.onResume();
         updateCartCount();
+    }
+
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.cart_menu:
+                Toast.makeText(getApplicationContext(),"ok",Toast.LENGTH_LONG)
+                        .show();
+                break;
+
+
+
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+
+
     }
 }
