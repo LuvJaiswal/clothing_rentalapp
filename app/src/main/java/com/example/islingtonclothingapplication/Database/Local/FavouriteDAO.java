@@ -1,5 +1,6 @@
 package com.example.islingtonclothingapplication.Database.Local;
 
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Query;
 
@@ -9,10 +10,11 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 
+@Dao
 public interface FavouriteDAO {
 
     @Query("SELECT * FROM Favourite")
-    Flowable<List<Favourite>>getFavItems();
+    Flowable<List<Favourite>> getFavItems();
 
     @Query("SELECT EXISTS (SELECT 1 FROM Favourite WHERE id=:itemid)")
     int isfavourite(int itemid);

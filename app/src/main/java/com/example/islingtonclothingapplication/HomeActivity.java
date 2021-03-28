@@ -27,7 +27,10 @@ import com.example.islingtonclothingapplication.Adapter.CategoryAdapter;
 import com.example.islingtonclothingapplication.Common.Common;
 import com.example.islingtonclothingapplication.Database.DataSource.CartDataSource;
 import com.example.islingtonclothingapplication.Database.DataSource.CartRepository;
+import com.example.islingtonclothingapplication.Database.DataSource.FavouriteRepository;
 import com.example.islingtonclothingapplication.Database.Local.CartDatabase;
+import com.example.islingtonclothingapplication.Database.Local.FavouriteDataSource;
+import com.example.islingtonclothingapplication.Database.ModelDB.Favourite;
 import com.example.islingtonclothingapplication.Remote.IMyAPI;
 import com.example.islingtonclothingapplication.model.Banner;
 
@@ -141,6 +144,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void initDB() {
         Common.cartDatabase = CartDatabase.getInstance(this);
         Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.cartDatabase.cartDAO()));
+        Common.favouriteRepository = FavouriteRepository.getInstance(FavouriteDataSource.getInstance(Common.cartDatabase.favouriteDAO()));
 
     }
 

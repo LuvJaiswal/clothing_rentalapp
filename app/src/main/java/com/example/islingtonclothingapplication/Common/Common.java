@@ -1,6 +1,7 @@
 package com.example.islingtonclothingapplication.Common;
 
 import com.example.islingtonclothingapplication.Database.DataSource.CartRepository;
+import com.example.islingtonclothingapplication.Database.DataSource.FavouriteRepository;
 import com.example.islingtonclothingapplication.Database.Local.CartDatabase;
 import com.example.islingtonclothingapplication.Database.ModelDB.Cart;
 import com.example.islingtonclothingapplication.Remote.IMyAPI;
@@ -32,6 +33,7 @@ public class Common {
     public static CartDatabase cartDatabase;
     public static CartRepository cartRepository;
 
+    public static FavouriteRepository favouriteRepository;
 
 
 
