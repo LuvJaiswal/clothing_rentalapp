@@ -1,34 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/yelloAccent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#FFD4DAFF"
+    android:padding="20dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:src="@mipmap/ic_launcher"
         android:id="@+id/img_avatar"
-        />
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="left"
+        android:layout_margin="20dp"
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
-        android:text="Ayusha Rental Clothes"
         android:id="@+id/txt_avatar_name"
-        android:textSize="30dp"
-        />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
-        android:text="This is my final product"
-        android:textStyle="italic|bold"
+        android:layout_gravity="left"
+        android:layout_marginLeft="10dp"
+
+        android:text="Ayusha"
+        android:textColor="#000000"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+    <TextView
+
         android:id="@+id/txt_avatar_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="admin@gmail.com"
+        android:textColor="#ACACAF"
         android:textSize="20dp"
+        android:textStyle="italic|bold"
+
+
         />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

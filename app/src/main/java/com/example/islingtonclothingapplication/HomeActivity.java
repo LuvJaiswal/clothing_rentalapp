@@ -58,7 +58,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.nex3z.notificationbadge.NotificationBadge;
 import com.squareup.picasso.Picasso;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private static final int PICK_FILE_REQUEST = 1222 ;
     SliderLayout sliderLayout;
@@ -97,29 +97,31 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home);
         //for navigation
 
-         toolbar = findViewById(R.id.toolbar);
+        toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        nav =  findViewById(R.id.navmenu);
         drawerLayout = findViewById(R.id.drawer);
 
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
+        drawerLayout.bringToFront();
         toggle.syncState();
+        nav = findViewById(R.id.nav_menu);
+        nav.setNavigationItemSelectedListener(HomeActivity.this);
 
         mService = Common.getAPI();
 
-        lst_category = (RecyclerView)findViewById(R.id.categoryList);
+//        lst_category = (RecyclerView)findViewById(R.id.categoryList);
+//
+//        lst_category.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+//        lst_category.setHasFixedSize(true);
 
-        lst_category.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        lst_category.setHasFixedSize(true);
 
-
-        sliderLayout = (SliderLayout) findViewById(R.id.slider);
+       // sliderLayout = findViewById(R.id.slider);
 
 
         /****
-         *
+         * p
         for avatar only
          *
          */
@@ -128,9 +130,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         //updating the navbar -- may be wrong approach
 
         View headerView = nav.getHeaderView(0);
-        txt_name = (TextView)headerView.findViewById(R.id.txt_avatar_name);
-        txt_email =(TextView)headerView.findViewById(R.id.txt_avatar_email);
-        img_avatar = (CircleImageView)headerView.findViewById(R.id.img_avatar);
+        txt_name = headerView.findViewById(R.id.txt_avatar_name);
+        txt_email =headerView.findViewById(R.id.txt_avatar_email);
+        img_avatar = headerView.findViewById(R.id.img_avatar);
+        txt_name.setText("Bikas");
 
 
         //event of avatar
@@ -142,6 +145,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 //            }
 //        });
 
+
         //set Info
 //
 //        txt_name.setText(Common.currentuser.getName());
@@ -150,6 +154,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 //
 //        //set avatar
 //
+
 //        if(!TextUtils.isEmpty(Common.currentuser.getAvatarUrl())){
 //            Picasso.with(this)
 //                    .load(new StringBuilder(Common.BASE_URL)
@@ -162,11 +167,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         //Get banner
 
-       // getBannerImage();
+      // getBannerImage();
 
 
-        //Get menu
-       // getMenu();
 
         //save newestToppingList
        // getToppingList();
@@ -175,6 +178,82 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
        // initDB();
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.iconmenu, menu);
+
+                View view = menu.findItem(R.id.cart_menu).getActionView();
+        badge = view.findViewById(R.id.badges);
+
+        cart_icon = view.findViewById(R.id.cart_icon);
+        cart_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HomeActivity.this, "Cart activity clicked", Toast.LENGTH_SHORT).show();
+                Intent i=new Intent(HomeActivity.this, CartActivity.class);
+                startActivity(i);
+            }
+        });
+
+        //updateCartCount();
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_home:
+                 Toast.makeText(getApplicationContext(),"Test 123232",Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.cart_icon:
+                Toast.makeText(getApplicationContext(),"Test Cart",Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+
+
+
+
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        compositeDisposable.dispose();
+        super.onDestroy();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_home:
+                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.nav_cart:
+                Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
+                break;
+
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+
+    }
 
     /***
      * AVATAR WORKING UPLOAD FILE
@@ -206,6 +285,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+
+
     private void uploadFile() {
         if (selectedFileUri != null){
 //            File file = FileUtils.getFile(this,selectedFileUri);
@@ -217,104 +298,85 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+//
+//
+//
+//
+//    private void initDB() {
+//        Common.cartDatabase = CartDatabase.getInstance(this);
+//        Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.cartDatabase.cartDAO()));
+//
+//    }
+//
+//    private void getToppingList() {
+//        compositeDisposable.add(mService.getClothes(Common.TOPPING_CLOTHES_ID)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<List<Clothes>>() {
+//                    @Override
+//                    public void accept(List<Clothes> clothes) throws Exception {
+//                        Common.toppingList = clothes;
+//                    }
+//                }));
+//    }
+//
+////    private void getMenu() {
+////        compositeDisposable.add(mService.getCategory()
+////                .subscribeOn(Schedulers.io())
+////                .observeOn(AndroidSchedulers.mainThread())
+////                .subscribe(new Consumer<List<Category>>() {
+////                    @Override
+////                    public void accept(List<Category> categories) throws Exception {
+////
+////                        displayCategory(categories);
+////                    }
+////                }));
+////
+////    }
+//
+////    private void displayCategory(List<Category> categories) {
+////        CategoryAdapter adapter = new CategoryAdapter(this, categories);
+////        lst_category.setAdapter(adapter);
+////    }
+////
+////
+//    private void getBannerImage() {
+//        compositeDisposable.add(mService.getBanners()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<List<Banner>>() {
+//                    @Override
+//                    public void accept(List<Banner> banners) throws Exception {
+//
+//                        displayImage(banners);
+//                    }
+//                }));
+//    }
+
+//    //ctrl+o
+//
+//
 
 
 
-    private void initDB() {
-        Common.cartDatabase = CartDatabase.getInstance(this);
-        Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.cartDatabase.cartDAO()));
-
-    }
-
-    private void getToppingList() {
-        compositeDisposable.add(mService.getClothes(Common.TOPPING_CLOTHES_ID)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<Clothes>>() {
-                    @Override
-                    public void accept(List<Clothes> clothes) throws Exception {
-                        Common.toppingList = clothes;
-                    }
-                }));
-    }
-
-    private void getMenu() {
-        compositeDisposable.add(mService.getCategory()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<Category>>() {
-                    @Override
-                    public void accept(List<Category> categories) throws Exception {
-
-                        displayCategory(categories);
-                    }
-                }));
-
-    }
-
-    private void displayCategory(List<Category> categories) {
-        CategoryAdapter adapter = new CategoryAdapter(this, categories);
-        lst_category.setAdapter(adapter);
-    }
-
-    private void getBannerImage() {
-        compositeDisposable.add(mService.getBanners()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<Banner>>() {
-                    @Override
-                    public void accept(List<Banner> banners) throws Exception {
-
-                        displayImage(banners);
-                    }
-                }));
-    }
-
-    //ctrl+o
-
-
-    @Override
-    protected void onDestroy() {
-        compositeDisposable.dispose();
-        super.onDestroy();
-    }
-
-    private void displayImage(List<Banner> banners) {
-
-        HashMap<String, String> bannerMap = new HashMap<>();
-        for (Banner item : banners)
-            bannerMap.put(item.getName(), item.getLink());
-
-        for (String name : bannerMap.keySet()) {
-            TextSliderView textSliderView = new TextSliderView(this);
-            textSliderView.description(name)
-                    .image(bannerMap.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit);
-
-            sliderLayout.addSlider(textSliderView);
-
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_action_bar, menu);
-        View view = menu.findItem(R.id.cart_menu).getActionView();
-        badge = (NotificationBadge)view.findViewById(R.id.badges);
-
-        cart_icon = (ImageView)view.findViewById(R.id.cart_icon);
-        cart_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(HomeActivity.this, "Cart activity clicked", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(HomeActivity.this,CartActivity.class));
-            }
-        });
-
-        updateCartCount();
-        return true;
-    }
-
+//
+//    private void displayImage(List<Banner> banners) {
+//
+//        HashMap<String, String> bannerMap = new HashMap<>();
+//        for (Banner item : banners)
+//            bannerMap.put(item.getName(), item.getLink());
+//
+//        for (String name : bannerMap.keySet()) {
+//            TextSliderView textSliderView = new TextSliderView(this);
+//            textSliderView.description(name)
+//                    .image(bannerMap.get(name))
+//                    .setScaleType(BaseSliderView.ScaleType.Fit);
+//
+//            sliderLayout.addSlider(textSliderView);
+//
+//        }
+//    }
+//
 
 
     private void updateCartCount() {
@@ -332,46 +394,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
+//
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.cart_menu) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
+//
+//    @Override
+//    public void onPointerCaptureChanged(boolean hasCapture) {
+//
+//    }
+//
 
     @Override
     protected void onResume() {
         super.onResume();
-        updateCartCount();
+       // updateCartCount();
     }
 
-
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.cart_menu:
-                Toast.makeText(getApplicationContext(),"ok",Toast.LENGTH_LONG)
-                        .show();
-                break;
-
-
-
-        }
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-
-
-    }
 }
