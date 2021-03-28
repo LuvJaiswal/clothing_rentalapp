@@ -8,11 +8,15 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.islingtonclothingapplication.Database.ModelDB.Cart;
+import com.example.islingtonclothingapplication.Database.ModelDB.Favourite;
 
-@Database(entities = {Cart.class},version = 1, exportSchema = false)
+@Database(entities = {Cart.class, Favourite.class},version = 1, exportSchema = false)
 public abstract class CartDatabase extends RoomDatabase {
 
     public abstract CartDAO cartDAO();
+
+    public abstract FavouriteDAO favouriteDAO();
+
     private static CartDatabase instance;
 
     public static CartDatabase getInstance(Context context){
