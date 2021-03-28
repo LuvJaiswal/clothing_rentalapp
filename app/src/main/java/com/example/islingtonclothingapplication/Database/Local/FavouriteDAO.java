@@ -21,5 +21,4 @@ public interface FavouriteDAO {
     void delete(Favourite favourite);
 
 
-
 }
