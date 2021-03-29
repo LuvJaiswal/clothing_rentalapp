@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.islingtonclothingapplication.Common.Common;
 import com.example.islingtonclothingapplication.Database.ModelDB.Cart;
+import com.example.islingtonclothingapplication.Database.ModelDB.Favourite;
 import com.example.islingtonclothingapplication.Interface.IItemClickListener;
 import com.example.islingtonclothingapplication.R;
 import com.example.islingtonclothingapplication.model.Clothes;
@@ -49,7 +50,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ClothesViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ClothesViewHolder holder, final int position) {
 
         holder.txt_price.setText(new StringBuilder("$").append(clothesList.get(position).Price).toString());
         holder.txt_clothe_name.setText(clothesList.get(position).Name);
@@ -70,7 +71,44 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
                 Toast.makeText(context, "Clicked the item", Toast.LENGTH_SHORT).show();
             }
         });
+
+        //for favourites working system
+
+        if (Common.favouriteRepository.isfavourite(Integer.parseInt(clothesList.get(position).ID)) == 1)
+            holder.btn_favourites.setImageResource(R.drawable.ic_baseline_favorite_24);
+        else
+            holder.btn_favourites.setImageResource(R.drawable.ic_baseline_favorite_border_white_24);
+
+        holder.btn_favourites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Common.favouriteRepository.isfavourite(Integer.parseInt(clothesList.get(position).ID)) != 1){
+                    addOrRemovefavourite(clothesList.get(position),true);
+                    holder.btn_favourites.setImageResource(R.drawable.ic_baseline_favorite_24);
+                }
+
+                else{
+                    addOrRemovefavourite(clothesList.get(position),false);
+                    holder.btn_favourites.setImageResource(R.drawable.ic_baseline_favorite_border_white_24);
+                }
+            }
+        });
+
     }
+
+    private void addOrRemovefavourite(Clothes clothes, boolean isAdd) {
+        Favourite favourite = new Favourite();
+        favourite.id = clothes.ID;
+        favourite.link = clothes.Link;
+        favourite.name = clothes.Name;
+        favourite.price = clothes.Price;
+        favourite.clothesid= clothes.CategoryId;
+
+        if (isAdd)
+            Common.favouriteRepository.insertFav(favourite);
+    }
+
+
 
     private void showAddToCartDialog(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

@@ -19,4 +19,7 @@ public interface IFavouriteDataSource {
 
 
     void delete(Favourite favourite);
+
+
+    void insertFav(Favourite...favourite);
 }

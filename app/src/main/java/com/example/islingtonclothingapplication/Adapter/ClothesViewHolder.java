@@ -18,7 +18,7 @@ public class ClothesViewHolder extends RecyclerView.ViewHolder implements View.O
 
     IItemClickListener itemClickListener;
 
-    Button btn_add_to_cart;
+    ImageView btn_add_to_cart, btn_favourites;
 
     public void setItemClickListener(IItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
@@ -31,8 +31,8 @@ public class ClothesViewHolder extends RecyclerView.ViewHolder implements View.O
         txt_clothe_name = (TextView) itemView.findViewById(R.id.txt_cloth_name);
         txt_price = (TextView) itemView.findViewById(R.id.txt_price);
 
-        btn_add_to_cart = (Button)itemView.findViewById(R.id.btn_add_cart);
-        
+        btn_add_to_cart = (ImageView) itemView.findViewById(R.id.btn_add_cart);
+        btn_favourites  = (ImageView) itemView.findViewById(R.id.btn_add_favourites);
 
         itemView.setOnClickListener(this);
 
