@@ -106,6 +106,8 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
 
         if (isAdd)
             Common.favouriteRepository.insertFav(favourite);
+        else
+            Common.favouriteRepository.delete(favourite);
     }
 
 

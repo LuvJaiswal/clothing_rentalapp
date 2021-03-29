@@ -66,4 +66,8 @@ public class ClothesActivity extends AppCompatActivity {
         lst_clothes.setAdapter(adapter);
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+    }
 }
