@@ -21,7 +21,7 @@
             app:title="Clothes Rental App" />
 
     </RelativeLayout>
-
+    
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navmenu"
@@ -73,5 +73,6 @@
 
 
     </LinearLayout>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

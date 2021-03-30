@@ -85,34 +85,37 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         nav = (NavigationView) findViewById(R.id.navmenu);
+        nav.setNavigationItemSelectedListener(this);
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                switch (menuItem.getItemId()) {
-                    case R.id.menu_home:
-                        Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                        startActivity(intent);
-                        Log.d(TAG, "homeclicked");
-                        break;
-
-
-                    case R.id.cart_icon:
-                        Toast.makeText(getApplicationContext(), "Cart clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
+//        nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//
+//                switch (menuItem.getItemId()) {
+//                    case R.id.menu_home:
+//                        Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+//                        startActivity(intent);
+//                        Log.d(TAG, "homeclicked");
+//                        break;
+//
+//
+//                    case R.id.cart_icon:
+//                        Toast.makeText(getApplicationContext(), "Cart clicked", Toast.LENGTH_SHORT).show();
+//                        break;
+//                }
+//
+//                drawerLayout.closeDrawer(GravityCompat.START);
+//                return true;
+//            }
+//        });
 
 
         mService = Common.getAPI();
@@ -262,13 +265,31 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.cart_menu) {
             return true;
         }
+        if (id == R.id.fav_menu) {
+           startActivity(new Intent(HomeActivity.this,FavouriteListActivity.class));
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
+        switch (menuItem.getItemId()) {
+            case R.id.menu_home:
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(intent);
+                Log.d(TAG, "homeclicked");
+                break;
+
+
+            case R.id.cart_icon:
+                Toast.makeText(getApplicationContext(), "Cart clicked", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     @Override
