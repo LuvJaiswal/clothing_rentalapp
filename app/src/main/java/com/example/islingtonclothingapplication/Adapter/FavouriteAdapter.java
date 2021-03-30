@@ -71,4 +71,14 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
 
         }
     }
+
+    public void removeItem(int position){
+        favouriteList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(Favourite item,int position){
+        favouriteList.add(position,item);
+        notifyItemInserted(position);
+    }
 }
