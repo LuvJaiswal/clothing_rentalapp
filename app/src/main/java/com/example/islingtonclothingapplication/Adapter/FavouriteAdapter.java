@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,16 +52,22 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
         return favouriteList.size();
     }
 
-    class FavouriteViewHolder extends RecyclerView.ViewHolder  {
+   public class FavouriteViewHolder extends RecyclerView.ViewHolder  {
 
         ImageView fav_img_product;
         TextView fav_txt_product_name, fav_txt_product_price;
+
+        public RelativeLayout view_background;
+        public LinearLayout view_foreground;
 
         public FavouriteViewHolder(View itemView){
             super(itemView);
             fav_img_product = (ImageView)itemView.findViewById(R.id.fav_img_product);
             fav_txt_product_name = (TextView) itemView.findViewById(R.id.fav_txt_product_name);
             fav_txt_product_price = (TextView) itemView.findViewById(R.id.fav_txt_product_price);
+
+            view_background = (RelativeLayout) itemView.findViewById(R.id.view_background);
+            view_foreground = (LinearLayout) itemView.findViewById(R.id.view_foreground);
 
         }
     }
