@@ -13,4 +13,10 @@
         android:icon="@drawable/ic_baseline_favorite_24"
         android:title="Fav list"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/search_menu"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="Search"
+        app:showAsAction="always" />
 </menu>

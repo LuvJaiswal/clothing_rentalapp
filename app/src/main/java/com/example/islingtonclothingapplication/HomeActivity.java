@@ -267,7 +267,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         if (id == R.id.fav_menu) {
            startActivity(new Intent(HomeActivity.this,FavouriteListActivity.class));
+           return true;
         }
+
+        if (id == R.id.search_menu) {
+            startActivity(new Intent(HomeActivity.this,SearchActivity.class));
+            return true;
+        }
+
 
 
         return super.onOptionsItemSelected(item);

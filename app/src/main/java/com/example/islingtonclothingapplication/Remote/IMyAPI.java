@@ -36,4 +36,7 @@ public interface IMyAPI {
     @POST("getclothes.php")
     Observable<List<Clothes>>getClothes(@Field("categoryid") String categoryID);
 
+    @GET("getallclothes.php")
+    Observable<List<Clothes>>getAllClothes();
+
 }
