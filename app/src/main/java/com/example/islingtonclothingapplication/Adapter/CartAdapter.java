@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.islingtonclothingapplication.Database.ModelDB.Cart;
+import com.example.islingtonclothingapplication.Database.ModelDB.Favourite;
 import com.example.islingtonclothingapplication.R;
 import com.squareup.picasso.Picasso;
 
@@ -31,7 +34,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @NonNull
     @Override
     public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.cart_item_layout,parent,false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.cart_item_layout, parent, false);
         return new CartViewHolder(itemView);
     }
 
@@ -51,7 +54,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 .append("%").toString());
 
 
-
     }
 
     @Override
@@ -59,20 +61,38 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         return cartList.size();
     }
 
-    class CartViewHolder extends RecyclerView.ViewHolder {
+    public class CartViewHolder extends RecyclerView.ViewHolder {
         ImageView img_product;
         TextView txt_product_name, txt_price, txt_size;
         ElegantNumberButton txt_amount;
 
+        public RelativeLayout view_background;
+        public LinearLayout view_foreground;
+
+
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            img_product = (ImageView)itemView.findViewById(R.id.cart_img_product);
+            img_product = (ImageView) itemView.findViewById(R.id.cart_img_product);
             txt_product_name = (TextView) itemView.findViewById(R.id.cart_txt_product_name);
             txt_price = (TextView) itemView.findViewById(R.id.cart_txt_product_price);
             txt_size = (TextView) itemView.findViewById(R.id.cart_txt_product_size);
 
             txt_amount = (ElegantNumberButton) itemView.findViewById(R.id.cart_txt_amount);
+
+            view_background = (RelativeLayout)itemView.findViewById(R.id.view_background);
+            view_foreground = (LinearLayout)itemView.findViewById(R.id.view_foreground);
+
         }
+    }
+
+    public void removeItem(int position){
+        cartList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(Cart item, int position){
+        cartList.add(position,item);
+        notifyItemInserted(position);
     }
 }
