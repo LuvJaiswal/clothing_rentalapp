@@ -136,6 +136,7 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 final String orderComment = edt_comment.getText().toString();
+
                 final String orderAddress;
                 if (rdi_user_address.isChecked())
                     // orderAddress=Common.user.getEmail().toString(); //take its address later
@@ -187,7 +188,7 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
         if (carts.size() > 0) {
             String orderDetail = new Gson().toJson(carts);
 
-            mService.submitOrder(sumPrice, orderDetail, orderComment, orderAddress, Common.user.getPhone())
+            mService.submitOrder(sumPrice, orderDetail, orderComment, orderAddress, "87324")
                     .enqueue(new Callback<APIResponse>() {
                         @Override
                         public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {

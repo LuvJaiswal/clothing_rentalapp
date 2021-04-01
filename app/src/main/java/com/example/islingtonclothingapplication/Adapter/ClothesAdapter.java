@@ -143,7 +143,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    Common.daysfor_rent = 0;
+                    Common.daysfor_rent = 1;
                 }
             }
         });
@@ -152,7 +152,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    Common.daysfor_rent = 1;
+                    Common.daysfor_rent = 2;
                 }
             }
         });
@@ -209,20 +209,21 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
 
         Picasso.with(context).load(clothesList.get(position).Link).into(img_product_dialog);
         txt_product_dialog.setText(new StringBuilder(clothesList.get(position).Name).append("   x   ")
-                .append(number).append(" for ")
-                .append(Common.daysfor_rent == 0 ? "Day 2" : "1 Week").toString());
+                .append(Common.daysfor_rent == 0 ? "Day 1" : "Day 2")
+                .append(number).append(" for ").toString());
+
 
         double price = (Double.parseDouble(clothesList.get(position).Price) * Double.parseDouble(number)) + Common.topPrice;
 
         if (Common.daysfor_rent == 1) {
-            price += 100;
+            price += 100*Double.parseDouble(number);
         }
         if (Common.daysfor_rent == 2) {
-            price += 200;
+            price += 200*Double.parseDouble(number);
         }
-        if (Common.daysfor_rent == 1) {
-            price += 300;
-        }
+//        if (Common.daysfor_rent == 1) {
+//            price += 300;
+//        }
 
         StringBuilder topp_final_comment = new StringBuilder("");
         for (String line : Common.toppingAdded)
@@ -231,7 +232,9 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
         //left smthing to explain
 
 
-        final double finalPrice = price;
+        final double finalPrice = Math.round(price);
+
+        txt_product_price.setText(new StringBuilder("$").append(finalPrice));
         builder.setNegativeButton("CONFIRM", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -243,7 +246,8 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
                     //Implement late in next part
 
                     Cart cartItem = new Cart();
-                    cartItem.name = txt_product_dialog.getText().toString();
+//                    cartItem.name = txt_product_dialog.getText().toString();
+                    cartItem.name = clothesList.get(position).Name;
                     cartItem.amount = Integer.parseInt(number);
                     cartItem.price = finalPrice;
                     cartItem.link = clothesList.get(position).Link;
