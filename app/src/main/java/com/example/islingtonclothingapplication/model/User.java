@@ -1,6 +1,6 @@
 package com.example.islingtonclothingapplication.model;
 
-class User {
+public class User {
 
     private String name ;
     private String email ;

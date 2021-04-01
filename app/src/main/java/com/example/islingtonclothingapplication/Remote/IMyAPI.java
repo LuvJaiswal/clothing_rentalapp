@@ -39,4 +39,14 @@ public interface IMyAPI {
     @GET("getallclothes.php")
     Observable<List<Clothes>>getAllClothes();
 
+    @FormUrlEncoded
+    @POST("submitorder.php")
+    Call<APIResponse> submitOrder(@Field("price") float orderPrice,
+                                  @Field("orderDetail") String orderDetail,
+                                  @Field("comment") String comment,
+                                  @Field("address") String address,
+                                  @Field("phone") String phone);
+
+
+
 }

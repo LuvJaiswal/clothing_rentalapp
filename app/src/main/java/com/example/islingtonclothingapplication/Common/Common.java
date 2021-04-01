@@ -8,6 +8,7 @@ import com.example.islingtonclothingapplication.Remote.IMyAPI;
 import com.example.islingtonclothingapplication.Remote.RetrofitClient;
 import com.example.islingtonclothingapplication.model.Category;
 import com.example.islingtonclothingapplication.model.Clothes;
+import com.example.islingtonclothingapplication.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,8 @@ public class Common {
     public static final String BASE_URL = "http://192.168.64.2/rentalcloth/";
 
     public static Category currentCategory=null;
+
+    public static User user=null;
 
     public static final String TOPPING_CLOTHES_ID = "4";
     public static List<Clothes> toppingList = new ArrayList<>();
