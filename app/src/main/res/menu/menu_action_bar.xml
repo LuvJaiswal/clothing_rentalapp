@@ -19,4 +19,9 @@
         android:icon="@drawable/ic_baseline_search_24"
         android:title="Search"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/admin_category"
+        android:title="Admin Category"
+        app:showAsAction="never"/>
 </menu>

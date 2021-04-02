@@ -56,6 +56,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     RecyclerView lst_category;
 
+
     private static final String TAG = "HomeActivity";
 
     //Rxjjava
@@ -274,6 +275,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             startActivity(new Intent(HomeActivity.this,SearchActivity.class));
             return true;
         }
+
+        if (id == R.id.admin_category) {
+            startActivity(new Intent(HomeActivity.this,ServerActivity.class));
+            return true;
+        }
+
+
 
 
 
