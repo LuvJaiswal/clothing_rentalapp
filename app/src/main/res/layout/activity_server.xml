@@ -7,7 +7,6 @@
     tools:context=".ServerActivity">
 
 
-
     <include layout="@layout/content_home" />
 
 
