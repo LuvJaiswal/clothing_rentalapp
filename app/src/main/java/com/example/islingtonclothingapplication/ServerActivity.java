@@ -1,12 +1,18 @@
 package com.example.islingtonclothingapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.islingtonclothingapplication.Adapter.CategoryAdapter;
@@ -15,6 +21,7 @@ import com.example.islingtonclothingapplication.Remote.IMyAPI;
 import com.example.islingtonclothingapplication.model.Category;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -26,11 +33,30 @@ import io.reactivex.schedulers.Schedulers;
 public class  ServerActivity extends AppCompatActivity {
 
 
+    private static final int REQUEST_PERMISSION_CODE = 1111 ;
     RecyclerView recycler_menu;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     IMyAPI mService;
 
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode){
+            case  REQUEST_PERMISSION_CODE:
+            {
+                if (grantResults.length > 0&& grantResults [0] ==PackageManager.PERMISSION_GRANTED)
+                    Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+
+            break;
+            default:
+                break;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +79,23 @@ public class  ServerActivity extends AppCompatActivity {
 
 //        NavigatigationView navigatigationView = (NavigationView)findViewById(R.id.nav_view);
 //        navigationView.setNavigationItemSelectedListener(this);
+
+
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
+        ActivityCompat.requestPermissions(this,new String[]{
+                Manifest.permission.READ_EXTERNAL_STORAGE
+        },REQUEST_PERMISSION_CODE);
+
+
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view,"Replace with your action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
 
         //View
