@@ -13,7 +13,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ServerActivity"></activity>
+        <activity android:name=".ServerActivity"
+            android:exported="true"
+            >
+            <intent-filter>
+            <action android:name="android.intent.action.GET_CONTENT" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.OPENABLE" />
+
+            <data android:mimeType="*/*" />
+
+            </intent-filter>
+        </activity>
         <activity android:name=".SearchActivity" />
         <activity android:name=".FavouriteListActivity" />
         <activity android:name=".CartActivity" />
