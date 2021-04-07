@@ -8,14 +8,14 @@
     android:layout_weight="10">
 
     <ImageView
-        android:id="@+id/img_browser"
+        android:id="@+id/update_img_browser"
         android:src="@drawable/ic_baseline_terrain_24"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="9" />
 
     <EditText
-        android:id="@+id/edt_name"
+        android:id="@+id/update_category_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Name"
