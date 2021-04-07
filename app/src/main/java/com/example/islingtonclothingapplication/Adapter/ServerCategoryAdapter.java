@@ -20,14 +20,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
+public class ServerCategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
 
     Context context;
     List<Category> categories;
 
     IItemClickListener IItemClickListener;
 
-    public CategoryAdapter(Context context, List<Category> categories) {
+    public ServerCategoryAdapter(Context context, List<Category> categories) {
         this.context = context;
         this.categories = categories;
     }
@@ -35,7 +35,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     @NonNull
     @Override
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.menu_item_layout, null);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.server_category_menu_layout, null);
         return new CategoryViewHolder(itemView);
     }
 
@@ -59,8 +59,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
 
                 Context context = v.getContext();
                 Common.currentCategory = categories.get(position);
-                
-                context.startActivity(new Intent(context, ClothesActivity.class));
+
+                context.startActivity(new Intent(context, UpdateCategoryActivity.class));
 
             }
         });

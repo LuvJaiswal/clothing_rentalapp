@@ -28,6 +28,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.islingtonclothingapplication.Adapter.CategoryAdapter;
+import com.example.islingtonclothingapplication.Adapter.ServerCategoryAdapter;
 import com.example.islingtonclothingapplication.Common.Common;
 import com.example.islingtonclothingapplication.Common.ProgressRequestBody;
 import com.example.islingtonclothingapplication.Common.UploadCallBack;
@@ -268,7 +269,7 @@ public class ServerActivity extends AppCompatActivity implements UploadCallBack 
     }
 
     private void displaCategoryList(List<Category> categories) {
-        CategoryAdapter adapter = new CategoryAdapter(this, categories);
+        ServerCategoryAdapter adapter = new ServerCategoryAdapter(this, categories);
         recycler_menu.setAdapter(adapter);
     }
 

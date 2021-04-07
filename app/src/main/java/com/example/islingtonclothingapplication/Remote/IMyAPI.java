@@ -21,12 +21,12 @@ public interface IMyAPI {
 
     @FormUrlEncoded
     @POST("login.php")
-            Call<APIResponse> loginUser(@Field("email") String email, @Field("password") String password);
+    Call<APIResponse> loginUser(@Field("email") String email, @Field("password") String password);
 
 
     @FormUrlEncoded
     @POST("register.php")
-    Call<APIResponse> registerUser(@Field("name") String name,@Field("email") String email, @Field("password") String password,  @Field("phone") String phone);
+    Call<APIResponse> registerUser(@Field("name") String name, @Field("email") String email, @Field("password") String password, @Field("phone") String phone);
 
 
     @GET("getbanner.php")
@@ -37,10 +37,10 @@ public interface IMyAPI {
 
     @FormUrlEncoded
     @POST("getclothes.php")
-    Observable<List<Clothes>>getClothes(@Field("categoryid") String categoryID);
+    Observable<List<Clothes>> getClothes(@Field("categoryid") String categoryID);
 
     @GET("getallclothes.php")
-    Observable<List<Clothes>>getAllClothes();
+    Observable<List<Clothes>> getAllClothes();
 
     @FormUrlEncoded
     @POST("submitorder.php")
@@ -52,11 +52,23 @@ public interface IMyAPI {
 
     @Multipart
     @POST("server/category/upload_category_img")
-    Call<String>uploadCategoryFile(@Part MultipartBody.Part file);
+    Call<String> uploadCategoryFile(@Part MultipartBody.Part file);
 
     @FormUrlEncoded
     @POST("server/category/add_category.php")
-    Observable<String>addNewCategory(@Field("name") String name, @Field("imgPath") String imgPath);
+    Observable<String> addNewCategory(@Field("name") String name, @Field("imgPath") String imgPath);
+
+
+    @FormUrlEncoded
+    @POST("server/category/update_category.php")
+    Observable<String> updateCategory(@Field("id") String id,
+                                      @Field("name") String name,
+                                      @Field("imgPath") String imgPath);
+
+    @FormUrlEncoded
+    @POST("server/category/delete_category.php")
+    Observable<String>deleteCategory(@Field("id") String id);
+
 
 
 }
