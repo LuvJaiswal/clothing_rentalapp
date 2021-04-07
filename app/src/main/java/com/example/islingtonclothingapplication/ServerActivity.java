@@ -237,7 +237,7 @@ public class ServerActivity extends AppCompatActivity implements UploadCallBack 
 
                                     uploaded_img_path = new StringBuilder(Common.BASE_URL)
                                             .append("server/category/category_img/")
-                                            .append(response.body().toString())
+                                            .append(response.body())
                                             .toString();
 
                                     Log.d("IMGPath", uploaded_img_path);
