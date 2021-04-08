@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.islingtonclothingapplication.AdminClothesListActivity;
 import com.example.islingtonclothingapplication.ClothesActivity;
 import com.example.islingtonclothingapplication.Common.Common;
 import com.example.islingtonclothingapplication.HomeActivity;
@@ -61,7 +62,8 @@ public class ServerCategoryAdapter extends RecyclerView.Adapter<CategoryViewHold
                     context.startActivity(new Intent(context, UpdateCategoryActivity.class));
                 }
                 else {
-
+                    Common.currentCategory = categories.get(position);
+                    context.startActivity(new Intent(context, AdminClothesListActivity.class));
                 }
             }
         });
