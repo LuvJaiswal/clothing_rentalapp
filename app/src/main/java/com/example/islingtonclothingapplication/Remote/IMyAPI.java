@@ -5,6 +5,7 @@ import com.example.islingtonclothingapplication.model.Banner;
 import com.example.islingtonclothingapplication.model.Category;
 import com.example.islingtonclothingapplication.model.Clothes;
 
+import java.sql.Struct;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -52,7 +53,7 @@ public interface IMyAPI {
 
     @Multipart
     @POST("server/category/upload_category_img")
-    Call<String> uploadCategoryFile(@Part MultipartBody.Part file);
+    Call<String>uploadCategoryFile(@Part MultipartBody.Part file);
 
     @FormUrlEncoded
     @POST("server/category/add_category.php")
@@ -70,5 +71,21 @@ public interface IMyAPI {
     Observable<String>deleteCategory(@Field("id") String id);
 
 
+    @FormUrlEncoded
+    @POST("server/product/add_product.php")
+    Observable<String>addNewProduct(@Field("name") String name,
+                                     @Field("imgPath") String imgPath,
+                                     @Field("price")String price,
+                                     @Field("categoryId")String categoryId);
+
+
+    @FormUrlEncoded
+    @POST("server/product/delete_clothes.php")
+    Observable<String>deleteProduct(@Field("id") String id);
+
+
+    @Multipart
+    @POST("server/product/upload_product_img")
+    Call<String>uploadProductFile(@Part MultipartBody.Part file);
 
 }

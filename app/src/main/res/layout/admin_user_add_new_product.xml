@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_weight="10">
+
+    <ImageView
+        android:id="@+id/product_img_browser"
+        android:src="@drawable/ic_baseline_terrain_24"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+       />
+
+    <EditText
+        android:id="@+id/edt_cloth_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Cloth Name"
+        />
+
+    <EditText
+        android:id="@+id/edt_cloth_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="Cloth Price"
+        />
+
+
+</LinearLayout>

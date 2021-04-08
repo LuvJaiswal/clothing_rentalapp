@@ -173,6 +173,7 @@ public class ServerActivity extends AppCompatActivity implements UploadCallBack 
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (edt_name.getText().toString().isEmpty()){
                     Toast.makeText(ServerActivity.this, "Please enter the name of the category name", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 if (uploaded_img_path.isEmpty())
                 {
