@@ -61,7 +61,7 @@ public interface IMyAPI {
 
     @FormUrlEncoded
     @POST("server/category/update_category.php")
-    Observable<String> updateCategory(@Field("id") String id,
+    Observable<String>updateCategory(@Field("id") String id,
                                       @Field("name") String name,
                                       @Field("imgPath") String imgPath);
 

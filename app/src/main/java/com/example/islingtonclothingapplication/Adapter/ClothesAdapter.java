@@ -67,9 +67,17 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesViewHolder> {
 
         holder.setItemClickListener(new IItemClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "Clicked the item", Toast.LENGTH_SHORT).show();
+            public void onClick(View v, boolean isLongClick) {
+                if (!isLongClick){
+                    Toast.makeText(context, "Clicked the item", Toast.LENGTH_SHORT).show();
+                }
             }
+
+//            @Override
+//            public void onClick(View v) {
+//
+//                Toast.makeText(context, "Clicked the item", Toast.LENGTH_SHORT).show();
+//            }
         });
 
         //for favourites working system

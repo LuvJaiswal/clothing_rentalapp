@@ -55,21 +55,32 @@ public class ServerCategoryAdapter extends RecyclerView.Adapter<CategoryViewHold
 
         holder.setItemClickListener(new IItemClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v, boolean isLongClick) {
+                if (isLongClick) {
+                    Common.currentCategory = categories.get(position);
+                    context.startActivity(new Intent(context, UpdateCategoryActivity.class));
+                }
+                else {
 
-                Context context = v.getContext();
-                Common.currentCategory = categories.get(position);
-
-                context.startActivity(new Intent(context, UpdateCategoryActivity.class));
-
+                }
             }
         });
 
-    }
+//            @Override
+//            public void onClick(View v) {
+//
+//                Context context = v.getContext();
+//                Common.currentCategory = categories.get(position);
+//
+//                context.startActivity(new Intent(context, UpdateCategoryActivity.class));
+//
+//            }
+//        });
 
+        }
 
-    @Override
-    public int getItemCount() {
-        return categories.size();
+        @Override
+        public int getItemCount () {
+            return categories.size();
+        }
     }
-}

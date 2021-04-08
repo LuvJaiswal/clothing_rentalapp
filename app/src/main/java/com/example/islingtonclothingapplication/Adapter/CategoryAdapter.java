@@ -55,14 +55,23 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
 
         holder.setItemClickListener(new IItemClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v, boolean isLongClick) {
+                if (!isLongClick){
+                    Common.currentCategory = categories.get(position);
 
-                Context context = v.getContext();
-                Common.currentCategory = categories.get(position);
-                
-                context.startActivity(new Intent(context, ClothesActivity.class));
-
+                    context.startActivity(new Intent(context, ClothesActivity.class));
+                }
             }
+
+//            @Override
+//            public void onClick(View v) {
+//
+//                Context context = v.getContext();
+////                Common.currentCategory = categories.get(position);
+////
+////                context.startActivity(new Intent(context, ClothesActivity.class));
+//
+//            }
         });
 
     }

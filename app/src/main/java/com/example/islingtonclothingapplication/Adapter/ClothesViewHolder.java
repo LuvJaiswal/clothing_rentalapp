@@ -40,6 +40,6 @@ public class ClothesViewHolder extends RecyclerView.ViewHolder implements View.O
 
     @Override
     public void onClick(View v) {
-        itemClickListener.onClick(v);
+        itemClickListener.onClick(v,false);
     }
 }
