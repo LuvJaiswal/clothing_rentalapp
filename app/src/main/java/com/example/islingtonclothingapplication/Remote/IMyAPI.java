@@ -85,7 +85,7 @@ public interface IMyAPI {
 
 
     @Multipart
-    @POST("server/product/upload_product_img")
+    @POST("server/product/upload_product_img.php")
     Call<String>uploadProductFile(@Part MultipartBody.Part file);
 
 }
