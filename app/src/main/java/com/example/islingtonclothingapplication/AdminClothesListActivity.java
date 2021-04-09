@@ -63,7 +63,7 @@ public class AdminClothesListActivity extends AppCompatActivity implements Uploa
 
     Uri selected_uri;
 
-    String uploaded_img_path;
+   String uploaded_img_path;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -122,12 +122,17 @@ public class AdminClothesListActivity extends AppCompatActivity implements Uploa
                                 @Override
                                 public void onResponse(Call<String> call, Response<String> response) {
 
-                                    uploaded_img_path = new StringBuilder(Common.BASE_URL)
-                                            .append("server/product/product_img/")
-                                            .append(response.body()) //.toString() not working here extra
-                                            .toString();
+                                    try {
+                                        uploaded_img_path = new StringBuilder(Common.BASE_URL)
+                                                .append("server/product/product_img/")
+                                                .append(response.body()) //.toString() not working here extra
+                                                .toString();
 
-                                    Log.d("IMGPath", uploaded_img_path);
+                                        Log.d("IMGPath", uploaded_img_path);
+                                    }catch (Exception e)
+                                    {
+                                        e.printStackTrace();
+                                    }
 
                                 }
 
@@ -208,6 +213,7 @@ public class AdminClothesListActivity extends AppCompatActivity implements Uploa
                 }
                 if (edt_cloth_price.getText().toString().isEmpty()) {
                     Toast.makeText(AdminClothesListActivity.this, "Please enter the cloth price o", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 if (uploaded_img_path.isEmpty()) {
                     Toast.makeText(AdminClothesListActivity.this, "Select cloth image", Toast.LENGTH_SHORT).show();
