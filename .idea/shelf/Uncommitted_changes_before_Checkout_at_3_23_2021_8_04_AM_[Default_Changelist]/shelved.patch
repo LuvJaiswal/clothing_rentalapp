@@ -1,0 +1,18 @@
+Index: app/src/main/java/com/example/islingtonclothingapplication/Common/Common.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.islingtonclothingapplication.Common;\r\n\r\nimport com.example.islingtonclothingapplication.Database.DataSource.CartRepository;\r\nimport com.example.islingtonclothingapplication.Database.Local.CartDatabase;\r\nimport com.example.islingtonclothingapplication.Database.ModelDB.Cart;\r\nimport com.example.islingtonclothingapplication.Remote.IMyAPI;\r\nimport com.example.islingtonclothingapplication.Remote.RetrofitClient;\r\nimport com.example.islingtonclothingapplication.model.Category;\r\nimport com.example.islingtonclothingapplication.model.Clothes;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\nimport retrofit2.Retrofit;\r\n\r\npublic class Common {\r\n    public static final String BASE_URL = \"http://192.168.100.63/rentalcloth/\";\r\n\r\n    public static Category currentCategory=null;\r\n\r\n    public static final String TOPPING_CLOTHES_ID = \"4\";\r\n    public static List<Clothes> toppingList = new ArrayList<>();\r\n\r\n    public static double topPrice = 0.0;\r\n    public static List<String>toppingAdded = new ArrayList<>();\r\n\r\n    //Hold field\r\n    public static int daysfor_rent = -1;\r\n\r\n\r\n    //Database\r\n    public static CartDatabase cartDatabase;\r\n    public static CartRepository cartRepository;\r\n\r\n\r\n\r\n\r\n    public static IMyAPI getAPI()\r\n    {\r\n        return RetrofitClient.getClient(BASE_URL).create(IMyAPI.class);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/islingtonclothingapplication/Common/Common.java	(revision 6600810aa8be66c2fccddb30e2aa979769a4a27d)
++++ app/src/main/java/com/example/islingtonclothingapplication/Common/Common.java	(date 1616465657303)
+@@ -14,7 +14,7 @@
+ import retrofit2.Retrofit;
+ 
+ public class Common {
+-    public static final String BASE_URL = "http://192.168.100.63/rentalcloth/";
++    public static final String BASE_URL = "http://192.168.1.115/rentalcloth/";
+ 
+     public static Category currentCategory=null;
+ 
