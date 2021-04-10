@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.islingtonclothingapplication.Adapter.ClothesAdapter;
 import com.example.islingtonclothingapplication.Common.Common;
+import com.example.islingtonclothingapplication.Common.CommonServer;
 import com.example.islingtonclothingapplication.Common.ProgressRequestBody;
 import com.example.islingtonclothingapplication.Common.UploadCallBack;
 import com.example.islingtonclothingapplication.Remote.IMyAPI;
@@ -94,85 +95,13 @@ public class AdminClothesListActivity extends AppCompatActivity implements Uploa
                     if (selected_uri != null && !selected_uri.getPath().isEmpty()) {
                         img_browser.setImageURI(selected_uri);
                         uploadFileToServer();
-                    }
+                    } else
+                        Toast.makeText(this, "Cannot upload File to the server", Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
 
-    private void uploadFileToServer() {
-
-        if (selected_uri != null) {
-            File file = FileUtils.getFile(this, selected_uri);
-
-            String fileName = new StringBuilder(UUID.randomUUID().toString())
-                    .append(FileUtils.getExtension(file.toString())).toString();
-
-
-            ProgressRequestBody requestFile = new ProgressRequestBody(file, this);
-
-            final MultipartBody.Part body = MultipartBody.Part.createFormData("uploaded file", fileName, requestFile);
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-
-                    mService.uploadProductFile(body)
-                            .enqueue(new Callback<String>() {
-                                @Override
-                                public void onResponse(Call<String> call, Response<String> response) {
-
-                                    try {
-                                        if (response.body() != null) {
-                                            uploaded_img_path = new StringBuilder(Common.BASE_URL)
-                                                    .append("server/product/product_img/")
-                                                    .append(response.body()) //.toString() not working here extra
-                                                    .toString();
-                                        }
-                                        Log.d("IMGPath", uploaded_img_path);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-
-                                }
-
-                                @Override
-                                public void onFailure(Call<String> call, Throwable t) {
-                                    Toast.makeText(AdminClothesListActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                }
-            }).start();
-
-        }
-
-    }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_clothes_list);
-
-        mService = Common.getAPI();
-
-
-        btn_add = findViewById(R.id.add_product_fab);
-        btn_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showAddProductDialog();
-            }
-        });
-
-        recycler_clothes = findViewById(R.id.recycler_admin_clothes_list);
-        recycler_clothes.setLayoutManager(new GridLayoutManager(this, 2));
-        recycler_clothes.setHasFixedSize(true);
-
-
-        loadListClothes(Common.currentCategory.getId());
-
-    }
 
     private void showAddProductDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -204,88 +133,160 @@ public class AdminClothesListActivity extends AppCompatActivity implements Uploa
                 selected_uri = null;
 
             }
-            }).
-
-            setPositiveButton("ADD",new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick (DialogInterface dialogInterface,int i){
-                    if (edt_cloth_name.getText().toString().isEmpty()) {
-                        Toast.makeText(AdminClothesListActivity.this, "Please enter the name of the cloth name", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    if (edt_cloth_price.getText().toString().isEmpty()) {
-                        Toast.makeText(AdminClothesListActivity.this, "Please enter the cloth price o", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    if (uploaded_img_path.isEmpty()) {
-                        Toast.makeText(AdminClothesListActivity.this, "Select cloth image", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    compositeDisposable.add(mService.addNewProduct(edt_cloth_name.getText().toString(),
-                            uploaded_img_path,
-                            edt_cloth_price.getText().toString(),
-                            Common.currentCategory.Id)
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribeOn(Schedulers.io())
-                            .subscribe(new Consumer<String>() {
-                                @Override
-                                public void accept(String s) throws Exception {
-                                    Toast.makeText(AdminClothesListActivity.this, s, Toast.LENGTH_SHORT).show();
-                                    loadListClothes(Common.currentCategory.getId());
+        }).setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (edt_cloth_name.getText().toString().isEmpty()) {
+                    Toast.makeText(AdminClothesListActivity.this, "Please enter the name of the cloth name", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (edt_cloth_price.getText().toString().isEmpty()) {
+                    Toast.makeText(AdminClothesListActivity.this, "Please enter the cloth price ", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (uploaded_img_path.isEmpty()) {
+                    Toast.makeText(AdminClothesListActivity.this, "Select cloth image", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                compositeDisposable.add(mService.addNewProduct(edt_cloth_name.getText().toString(),
+                        uploaded_img_path,
+                        edt_cloth_price.getText().toString(),
+                        Common.currentCategory.Id)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(new Consumer<String>() {
+                            @Override
+                            public void accept(String s) throws Exception {
+                                Toast.makeText(AdminClothesListActivity.this, s, Toast.LENGTH_SHORT).show();
+                                loadListClothes(Common.currentCategory.getId());
 
 //                                           uploaded_img_path = "";
 //                                           selected_uri = null;
 
 
-                                }
-                            }, new Consumer<Throwable>() {
-                                @Override
-                                public void accept(Throwable throwable) throws Exception {
-                                    Toast.makeText(AdminClothesListActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            }));
-                }
-            }).show();
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                Toast.makeText(AdminClothesListActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }));
+            }
+        }).show();
 
 
-        }
-
-        private void loadListClothes (String id){
-            compositeDisposable.add(mService.getClothes(id).observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(new Consumer<List<Clothes>>() {
-                        @Override
-                        public void accept(List<Clothes> clothes) throws Exception {
-                            displayClothesList(clothes);
-                        }
-                    }));
-        }
-
-        private void displayClothesList (List < Clothes > clothes) {
-            ClothesAdapter adapter = new ClothesAdapter(this, clothes);
-            recycler_clothes.setAdapter(adapter);
-        }
-
-        @Override
-        protected void onResume () {
-            loadListClothes(Common.currentCategory.getId());
-            super.onResume();
-        }
-
-        @Override
-        protected void onDestroy () {
-            compositeDisposable.clear();
-            super.onDestroy();
-        }
-
-        @Override
-        protected void onStop () {
-            compositeDisposable.clear();
-            super.onStop();
-        }
-
-        @Override
-        public void onProgressUpdate ( int percentage){
-
-        }
     }
+
+    private void uploadFileToServer() {
+
+        if (selected_uri != null) {
+            File file = FileUtils.getFile(this, selected_uri);
+
+            String fileName = new StringBuilder(UUID.randomUUID().toString())
+                    .append(FileUtils.getExtension(file.toString())).toString();
+
+
+            ProgressRequestBody requestFile = new ProgressRequestBody(file, this);
+
+            final MultipartBody.Part body = MultipartBody.Part.createFormData("uploaded_file", fileName, requestFile);
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    mService.uploadProductFile(body)
+                            .enqueue(new Callback<String>() {
+                                @Override
+                                public void onResponse(Call<String> call, Response<String> response) {
+
+                                    try {
+                                        if (response.body() != null) {
+                                            uploaded_img_path = new StringBuilder(Common.BASE_URL)
+                                                    .append("server/product/product_img/")
+                                                    .append(response.body()) //.toString() not working here extra
+                                                    .toString();
+                                            Log.d("IMGPath", uploaded_img_path);
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<String> call, Throwable t) {
+                                    Toast.makeText(AdminClothesListActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+            }).start();
+
+        }
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_admin_clothes_list);
+
+        mService = Common.getAPI();
+
+
+        btn_add = findViewById(R.id.add_product_fab);
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAddProductDialog();
+            }
+        });
+
+        recycler_clothes = findViewById(R.id.recycler_admin_clothes_list);
+        recycler_clothes.setLayoutManager(new GridLayoutManager(this, 2));
+        recycler_clothes.setHasFixedSize(true);
+
+
+        loadListClothes(Common.currentCategory.getId());
+
+    }
+
+
+    private void loadListClothes(String id) {
+        compositeDisposable.add(mService.getClothes(id).observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Consumer<List<Clothes>>() {
+                    @Override
+                    public void accept(List<Clothes> clothes) throws Exception {
+                        displayClothesList(clothes);
+                    }
+                }));
+    }
+
+    private void displayClothesList(List<Clothes> clothes) {
+        ClothesAdapter adapter = new ClothesAdapter(this, clothes);
+        recycler_clothes.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        loadListClothes(Common.currentCategory.getId());
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        compositeDisposable.clear();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        compositeDisposable.clear();
+        super.onStop();
+    }
+
+    @Override
+    public void onProgressUpdate(int percentage) {
+
+    }
+}
