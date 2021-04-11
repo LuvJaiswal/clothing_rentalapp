@@ -162,14 +162,17 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
                                 .subscribe(new Consumer<List<Cart>>() {
                                     @Override
                                     public void accept(List<Cart> carts) throws Exception {
+                                        try {
+                                            if (!TextUtils.isEmpty(orderAddress) && !TextUtils.isEmpty(orderComment))
+                                                sendOrderToServer(Common.cartRepository.sumPrice(),
+                                                        carts,
+                                                        orderComment, orderAddress);
 
-                                        if (!TextUtils.isEmpty(orderAddress))
-                                            sendOrderToServer(Common.cartRepository.sumPrice(),
-                                                    carts,
-                                                    orderComment, orderAddress);
-
-                                        else
-                                            Toast.makeText(CartActivity.this, "Order Address cant be null", Toast.LENGTH_SHORT).show();
+                                            else
+                                                Toast.makeText(CartActivity.this, "Fill the details", Toast.LENGTH_SHORT).show();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
                                     }
                                 })
                 );
@@ -188,15 +191,14 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
         if (carts.size() > 0) {
             String orderDetail = new Gson().toJson(carts);
 
-            mService.submitOrder(sumPrice, orderDetail, orderComment, orderAddress, "87324")
+            mService.submitOrder(sumPrice, orderDetail, orderComment, orderAddress, "985403292")
                     .enqueue(new Callback<APIResponse>() {
                         @Override
                         public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-
-                            Toast.makeText(CartActivity.this, "Order Submitted", Toast.LENGTH_SHORT).show();
-
-                            //clear  cart
                             Common.cartRepository.emptyCart();
+                            Toast.makeText(CartActivity.this, "Order Submitted", Toast.LENGTH_SHORT).show();
+                            //clear  cart
+
                         }
 
                         @Override
