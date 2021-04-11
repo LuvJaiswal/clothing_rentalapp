@@ -291,16 +291,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case R.id.menu_home:
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(intent);
-                Log.d(TAG, "homeclicked");
-                break;
-
-
-            case R.id.cart_icon:
-                Toast.makeText(getApplicationContext(), "Cart clicked", Toast.LENGTH_SHORT).show();
-                break;
+//            case R.id.menu_home:
+//                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+//                startActivity(intent);
+//                Log.d(TAG, "homeclicked");
+//                break;
+//
+//
+//            case R.id.cart_icon:
+//                Toast.makeText(getApplicationContext(), "Cart clicked", Toast.LENGTH_SHORT).show();
+//                break;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
