@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, result.getError_msg(), Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                            Intent intent = new Intent(MainActivity.this, SplashActivity.class);
                             startActivity(intent);
                         }
                     }

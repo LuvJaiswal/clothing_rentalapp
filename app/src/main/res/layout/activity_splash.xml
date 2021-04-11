@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SplashActivity"
+    android:background="@drawable/bg_gradient">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:srcCompat="@drawable/welcome_splash" />
+
+    <RelativeLayout
+        android:layout_below="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/yelloAccent">
+
+        <TextView
+            android:id="@+id/nulls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TO RENTAL CLOSET"
+            android:textStyle="italic|bold"
+            android:textSize="30dp"/>
+
+        <TextView
+            android:layout_below="@id/nulls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Developed by :Ayusha"
+            android:textStyle="italic|bold"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

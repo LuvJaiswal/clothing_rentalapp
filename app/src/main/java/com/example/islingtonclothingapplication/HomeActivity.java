@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -305,6 +306,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
             return true;
+        }
+        if (id == R.id.review) {
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setData(Uri.parse("email"));
+                String[] s = {"Uaayusha@gmail.com"};
+                i.putExtra(Intent.EXTRA_EMAIL, s);
+                i.putExtra(Intent.EXTRA_SUBJECT, "'Write your Subject here'");
+                i.putExtra(Intent.EXTRA_TEXT, "Your FeedBack please");
+                i.setType("message/rfc822");
+                Intent chooser = Intent.createChooser(i, "Give your Feedback from Gmail");
+                startActivity(chooser);
+                return true;
         }
 
 
