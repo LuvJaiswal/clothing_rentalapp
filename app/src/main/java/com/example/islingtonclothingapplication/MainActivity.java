@@ -2,6 +2,7 @@ package com.example.islingtonclothingapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -37,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Init views
-        txt_register = (TextView)findViewById(R.id.txt_register);
-        et_email = (EditText)findViewById(R.id.login_email);
-        et_password=(EditText)findViewById(R.id.login_password);
+        txt_register = (TextView) findViewById(R.id.txt_register);
+        et_email = (EditText) findViewById(R.id.login_email);
+        et_password = (EditText) findViewById(R.id.login_password);
 
         btn_login = (Button) findViewById(R.id.LoginBtn);
 
@@ -64,18 +65,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void authenticateUser(String email, String password) {
-        mService.loginUser(email,password)
+        mService.loginUser(email, password)
                 .enqueue(new Callback<APIResponse>() {
                     @Override
                     public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
                         APIResponse result = response.body();
-                        if (result.isError()){
-                            Toast.makeText(MainActivity.this,result.getError_msg(), Toast.LENGTH_SHORT).show();
-                        }
-
-                        else{
+                        if (result.isError()) {
+                            Toast.makeText(MainActivity.this, result.getError_msg(), Toast.LENGTH_SHORT).show();
+                        } else {
                             Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                            Intent intent= new Intent(MainActivity.this,HomeActivity.class);
+                            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                             startActivity(intent);
                         }
                     }
@@ -89,5 +88,10 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }
