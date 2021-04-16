@@ -95,5 +95,7 @@ dependencies {
 
     implementation 'com.github.mancj:MaterialSearchBar:0.8.2'
 
+    // https://mvnrepository.com/artifact/com.paypal.sdk/paypal-android-sdk
+    implementation group: 'com.paypal.sdk', name: 'paypal-android-sdk', version: '2.15.3'
 
 }

@@ -1,12 +1,8 @@
 package com.example.islingtonclothingapplication;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,22 +16,32 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.islingtonclothingapplication.Adapter.CartAdapter;
-import com.example.islingtonclothingapplication.Adapter.FavouriteAdapter;
 import com.example.islingtonclothingapplication.Common.Common;
 import com.example.islingtonclothingapplication.Common.RecyclerItemTouchHelper;
 import com.example.islingtonclothingapplication.Common.RecyclerItemTouchHelperListener;
 import com.example.islingtonclothingapplication.Database.ModelDB.Cart;
-import com.example.islingtonclothingapplication.Database.ModelDB.Favourite;
+import com.example.islingtonclothingapplication.Paypal.PayPal_Client_Id;
 import com.example.islingtonclothingapplication.Remote.IMyAPI;
 import com.example.islingtonclothingapplication.model.APIResponse;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -43,6 +49,8 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static java.math.BigDecimal.ONE;
 
 public class CartActivity extends AppCompatActivity implements RecyclerItemTouchHelperListener {
 
@@ -57,6 +65,11 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
     RelativeLayout rootLayout;
 
     IMyAPI mService;
+
+    private int PAYPAL_PEO_CODE=12;
+    private static PayPalConfiguration payPalConfiguration=new PayPalConfiguration()
+            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+            .clientId(PayPal_Client_Id.PAYPAL_CLIENT_ID);
 
 
     @Override
@@ -74,6 +87,10 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
 
         ItemTouchHelper.SimpleCallback simpleCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(recycler_cart);
+
+        Intent intent= new Intent(this,PayPalService.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,payPalConfiguration);
+        startService(intent);
 
         btn_place_order = (Button) findViewById(R.id.btn_place_order);
 
@@ -163,11 +180,13 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
                                     @Override
                                     public void accept(List<Cart> carts) throws Exception {
                                         try {
-                                            if (!TextUtils.isEmpty(orderAddress) && !TextUtils.isEmpty(orderComment))
+                                            if (!TextUtils.isEmpty(orderAddress) && !TextUtils.isEmpty(orderComment)){
                                                 sendOrderToServer(Common.cartRepository.sumPrice(),
                                                         carts,
                                                         orderComment, orderAddress);
+                                                paypalPaymentMethod(BigDecimal.valueOf( 100 ),"order");
 
+                                            }
                                             else
                                                 Toast.makeText(CartActivity.this, "Fill the details", Toast.LENGTH_SHORT).show();
                                         } catch (Exception e) {
@@ -186,19 +205,21 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
 
     }
 
-    private void sendOrderToServer(float sumPrice, List<Cart> carts, String orderComment, String orderAddress) {
+    private void sendOrderToServer(final float sumPrice, List<Cart> carts, String orderComment, String orderAddress) {
 
         if (carts.size() > 0) {
-            String orderDetail = new Gson().toJson(carts);
+            final String orderDetail = new Gson().toJson(carts);
 
             mService.submitOrder(sumPrice, orderDetail, orderComment, orderAddress, "985403292")
                     .enqueue(new Callback<APIResponse>() {
                         @Override
                         public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+
+
+
                             Common.cartRepository.emptyCart();
                             Toast.makeText(CartActivity.this, "Order Submitted", Toast.LENGTH_SHORT).show();
                             //clear  cart
-
                         }
 
                         @Override
@@ -209,6 +230,30 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
                     });
         }
     }
+    private void paypalPaymentMethod(BigDecimal price,String details) {
+        PayPalPayment payment=new PayPalPayment(new BigDecimal(String.valueOf(price)), "USD",
+                details,PayPalPayment.PAYMENT_INTENT_SALE
+        );
+        Intent intent=new Intent(this, PaymentActivity.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,payPalConfiguration);
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payment);
+        startActivityForResult(intent,PAYPAL_PEO_CODE);
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==PAYPAL_PEO_CODE){
+            if(resultCode== Activity.RESULT_OK){
+                Toast.makeText(this,"Payment Made Successfully",Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(this,"Payment Not Success",Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
 
 
     private void loadCartItems() {
@@ -229,28 +274,11 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
     private void displayCartItem(List<Cart> carts) {
 
         cartList = carts;
-
         cartAdapter = new CartAdapter(this, carts);
         recycler_cart.setAdapter(cartAdapter);
     }
 
-    @Override
-    protected void onDestroy() {
-        compositeDisposable.clear();
-        super.onDestroy();
-    }
 
-    @Override
-    protected void onStop() {
-        compositeDisposable.clear();
-        super.onStop();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        loadCartItems();
-    }
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
@@ -282,4 +310,23 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
 
         }
     }
+    @Override
+    protected void onDestroy() {
+        stopService(new Intent(this,PayPalService.class));
+        compositeDisposable.clear();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        compositeDisposable.clear();
+        super.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadCartItems();
+    }
+
 }
