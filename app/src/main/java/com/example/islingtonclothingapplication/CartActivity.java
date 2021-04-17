@@ -68,7 +68,7 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
 
     private int PAYPAL_PEO_CODE=12;
     private static PayPalConfiguration payPalConfiguration=new PayPalConfiguration()
-            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+            .environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK)
             .clientId(PayPal_Client_Id.PAYPAL_CLIENT_ID);
 
 
@@ -181,10 +181,10 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
                                     public void accept(List<Cart> carts) throws Exception {
                                         try {
                                             if (!TextUtils.isEmpty(orderAddress) && !TextUtils.isEmpty(orderComment)){
+
                                                 sendOrderToServer(Common.cartRepository.sumPrice(),
                                                         carts,
                                                         orderComment, orderAddress);
-                                                paypalPaymentMethod(BigDecimal.valueOf( 100 ),"order");
 
                                             }
                                             else
@@ -219,7 +219,7 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
 
                             Common.cartRepository.emptyCart();
                             Toast.makeText(CartActivity.this, "Order Submitted", Toast.LENGTH_SHORT).show();
-                            //clear  cart
+                            paypalPaymentMethod(BigDecimal.valueOf( 10 ),"order");
                         }
 
                         @Override
