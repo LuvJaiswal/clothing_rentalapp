@@ -1,12 +1,15 @@
 package com.example.islingtonclothingapplication;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -29,9 +32,15 @@ import com.example.islingtonclothingapplication.Database.ModelDB.Cart;
 import com.example.islingtonclothingapplication.Database.ModelDB.Favourite;
 import com.example.islingtonclothingapplication.Remote.IMyAPI;
 import com.example.islingtonclothingapplication.model.APIResponse;
+import com.example.islingtonclothingapplication.paypal.Paypal_Client_ID;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +67,10 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
 
     IMyAPI mService;
 
-
+    private int PAYPAL_PEO_CODE=12;
+    private static PayPalConfiguration payPalConfiguration=new PayPalConfiguration()
+            .environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK)
+            .clientId(Paypal_Client_ID.PAYPAL_CLIENT_ID);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +101,10 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
 
         rootLayout = (RelativeLayout) findViewById(R.id.rootLayout);
         loadCartItems();
+
+        Intent intent= new Intent(this, PayPalService.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,payPalConfiguration);
+        startService(intent);
 
     }
 
@@ -198,6 +214,7 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
                             Common.cartRepository.emptyCart();
                             Toast.makeText(CartActivity.this, "Order Submitted", Toast.LENGTH_SHORT).show();
                             //clear  cart
+                            paypalPaymentMethod(BigDecimal.valueOf( 10 ),"order");
 
                         }
 
@@ -207,6 +224,31 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
                             Log.e("ERROR", t.getMessage());
                         }
                     });
+        }
+    }
+
+
+    private void paypalPaymentMethod(BigDecimal price, String details) {
+        PayPalPayment payment=new PayPalPayment(new BigDecimal(String.valueOf(price)), "USD",
+                details,PayPalPayment.PAYMENT_INTENT_SALE
+        );
+        Intent intent=new Intent(this, PaymentActivity.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,payPalConfiguration);
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payment);
+        startActivityForResult(intent,PAYPAL_PEO_CODE);
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==PAYPAL_PEO_CODE){
+            if(resultCode== Activity.RESULT_OK){
+                Toast.makeText(this,"Payment Made Successfully",Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(this,"Payment Not Success",Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -236,6 +278,7 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
 
     @Override
     protected void onDestroy() {
+        stopService(new Intent(this,PayPalService.class));
         compositeDisposable.clear();
         super.onDestroy();
     }
