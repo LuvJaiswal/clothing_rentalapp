@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "291250489875",
+    "project_id": "closetrental-8a3de",
+    "storage_bucket": "closetrental-8a3de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291250489875:android:f41dc2545e1092759a0de6",
+        "android_client_info": {
+          "package_name": "com.example.islingtonclothingapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291250489875-kpun49m2lpecmh4h1mfc0fk9kuc1c5go.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpiqtvql6Yw84eN5IGJX1x6Sng246n6gI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291250489875-kpun49m2lpecmh4h1mfc0fk9kuc1c5go.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
