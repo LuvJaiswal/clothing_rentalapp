@@ -100,4 +100,15 @@ dependencies {
     // https://mvnrepository.com/artifact/com.paypal.sdk/paypal-android-sdk
     implementation group: 'com.paypal.sdk', name: 'paypal-android-sdk', version: '2.15.3'
 
+
+
+//    dependencies {
+//        implementation 'androidx.multidex:multidex:2.0.1' //enter the latest version
+//    }
+//    android {
+//        defaultConfig {
+//            multiDexEnabled true
+//        }
+//    }
+
 }
